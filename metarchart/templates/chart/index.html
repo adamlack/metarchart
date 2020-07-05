@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Charting METAR values for {{ icao }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div style="background:#222222;">{{ the_div|safe }}</div>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>
+    {{ the_script|safe }}
+{% endblock %}

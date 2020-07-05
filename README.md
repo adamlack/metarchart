@@ -1,2 +1,2 @@
 # metarchart
-Flask web app for plotting METAR data
+A Flask web app for plotting METAR data using Bokeh.

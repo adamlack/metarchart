@@ -1,0 +1,2 @@
+FLASK_APP=metarchart.py
+FLASK_ENV=development

@@ -1,0 +1,3 @@
+graft metarchart/static
+graft metarchart/templates
+global-exclude *.pyc
