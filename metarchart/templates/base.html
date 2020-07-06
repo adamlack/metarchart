@@ -1,19 +1,23 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - helloworld test app</title>
+<title>metarchart: {% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<style>
-    .bk-tooltip {background:rgba(0,0,0,0.8) !important; border:none !important; color:#ddd !important;}
-</style>
-</style>
+<section id="messages">
+    {% for message in get_flashed_messages() %}
+    <div class="flash" id="{{ messageid }}"><span style="color:red;">!</span> {{ message }}<a href="#" onclick="hide('{{ messageid }}')" class="close-flash">X</a></div>
+    {% endfor %}
+    <!--<div class="flash" id="testmessage"><span style="color:red;">!</span> Alert message goes here. This is a test test test.<a href="#" onclick="hide('testmessage')" class="close-flash">X</a></div>-->
+</section>
 <nav>
-    <h1>helloworld test app</h1>
+    <ul>
+        <li>metarchart</li>
+        <li><a href="#">by variable</a></li>
+        <li><a href="#">about</a></li>
+    </ul>
 </nav>
 <section class="content">
     <header>
         {% block header %}{% endblock %}
     </header>
-    {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %}
     {% block content %}{% endblock %}
 </section>
+<script type="text/javascript">function hide(elementId) {document.getElementById(elementId).style.display="none";}</script>
