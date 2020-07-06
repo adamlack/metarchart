@@ -10,25 +10,43 @@ bp = Blueprint('chart', __name__)
 
 @bp.route('/', methods=('GET','POST'))
 def index():
-    icao = request.args.get('icao')
-    if icao == None:
-        icao = 'EGVO'
-    time_window = request.args.get('h')
-    if time_window == None:
-        time_window = 12
-    else:
-        time_window = int(time_window)
-    metar_data = latestMetars(icao, time_window)
-    name, units, values, times = extract(metar_data, 'wspeed')
-    data={}
-    data['Time'] = times
-    data[name] = values
+    error = None
+    if request.method == 'POST': # prefer POST parameters if available
+        icao = request.form['icao']
+        time_window = request.form['time_window']
+    else: # otherwise try and use GET parameters
+        icao = request.args.get('icao')
+        if icao == None: # set default if no parameters available
+            icao = 'EGVO'
+            flash('Defaulted to location EGVO (parameter not given)') #DEBUG
+        time_window = request.args.get('h')
+        if time_window == None: # set default if no parameters available
+            time_window = 12
+            flash('Defaulted to latest '+str(time_window)+' hours (parameter not given)') #DEBUG
+        else:
+            time_window = int(time_window)
 
-    script, div = make_plot.timeLineChart(data, "Time", name, units, icao)
+    if error is None:
+        metar_data = latestMetars(icao, time_window)
+        name, units, values, times = extract(metar_data, 'wspeed')
+        data={}
+        data['Time'] = times
+        data[name] = values
+
+        details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
+
+        if data[name]:
+            script, div = make_plot.timeLineChart(data, "Time", name, details)
+        else:
+            script, div = None, None
+            error = 'No data retrieved. Please check request details.'
+    
+    if error != None:
+        flash(error)
 
     return render_template(
         'chart/index.html',
-        details={'icao':icao, 'name':name, 'units':units, 'time_window':time_window},
+        details=details,
         the_div=div,
         the_script=script
     )

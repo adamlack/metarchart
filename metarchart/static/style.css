@@ -12,7 +12,7 @@ nav ul li .active {background:#222; color:rgb(84, 226, 132);}
 .content {padding:0 2rem 2rem;}
 .content > header h1 {color:#aaaaaa;}
 #messages {margin:0; padding:0;}
-.flash {margin:0; padding:0.6rem; background:rgb(228, 184, 102); color:rgb(34, 19, 6); font-size:0.8rem; font-weight:bold;}
+.flash {margin:0; padding:0.6rem; background:rgb(228, 184, 102); color:rgb(34, 19, 6); font-size:0.8rem; font-weight:bold; border-bottom:1px solid rgb(209, 166, 85);}
 .close-flash {display:block; padding:0.2rem; float:right; color:rgb(34, 19, 6);}
 .close-flash:hover {background: rgb(34, 19, 6); color: rgb(228, 184, 102);}
 .bk-tooltip {background:rgba(0,0,0,0.8) !important; border:none !important; color:#ddd !important;}

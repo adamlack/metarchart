@@ -3,9 +3,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <section id="messages">
     {% for message in get_flashed_messages() %}
-    <div class="flash" id="{{ messageid }}"><span style="color:red;">!</span> {{ message }}<a href="#" onclick="hide('{{ messageid }}')" class="close-flash">X</a></div>
+    <div class="flash"><span style="color:red;">!</span> {{ message }}<a href="#" onclick="this.parentNode.style.display='none';" class="close-flash">Dismiss X</a></div>
     {% endfor %}
-    <!--<div class="flash" id="testmessage"><span style="color:red;">!</span> Alert message goes here. This is a test test test.<a href="#" onclick="hide('testmessage')" class="close-flash">X</a></div>-->
 </section>
 <nav>
     <ul>
@@ -20,4 +19,3 @@
     </header>
     {% block content %}{% endblock %}
 </section>
-<script type="text/javascript">function hide(elementId) {document.getElementById(elementId).style.display="none";}</script>

@@ -5,13 +5,13 @@ from bokeh.models.sources import ColumnDataSource
 from bokeh.models.formatters import DatetimeTickFormatter
 from bokeh.models.callbacks import CustomJS
 
-def timeLineChart(data, x_name, y_name, units='', location='', width=600, height=100):
+def timeLineChart(data, x_name, y_name, details='', width=600, height=150):
     source = ColumnDataSource(data)
 
-    if len(units)>0:
-        units = ' ('+units+')'
-    if len(location)>0:
-        location = ' at '+location.upper()
+    if len(details['units'])>0:
+        units = ' ('+details['units']+')'
+    if len(details['icao'])>0:
+        location = ' at '+details['icao'].upper()
 
     xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
    
@@ -49,11 +49,17 @@ def timeLineChart(data, x_name, y_name, units='', location='', width=600, height
         hover_line_alpha=0
     )
 
+    plot.toolbar.active_drag = None
+    plot.toolbar.active_scroll = None
+
+    date_tick_format = " %d/%H%MZ"
     plot.xaxis.formatter = DatetimeTickFormatter(
-        minutes=["%d/%m %H%MZ"],
-        hours=["%d/%m %H%MZ"],
-        days=["%d/%m %H%MZ"],
+        minutes=[date_tick_format],
+        hours=[date_tick_format],
+        days=[date_tick_format],
     )
+    plot.xaxis.ticker.desired_num_ticks = 10
+    plot.xaxis.major_label_orientation = 3.1415/4
     plot.yaxis.axis_label = y_name+units
 
     # Style variables "sv"
