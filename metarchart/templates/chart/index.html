@@ -33,7 +33,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{% block title %}{{ details['name'] }} at {{ details['icao'] }} over the last {{ details['time_window'] }} hours{% endblock %}</h1>
+    <h1>{% block title %}{{ pagetitle }}{% endblock %}</h1>
     <div style="background:#222222;">{{ the_div|safe }}</div>
     <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>
     {{ the_script|safe }}

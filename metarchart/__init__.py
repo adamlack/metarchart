@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask import render_template
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -27,5 +28,9 @@ def create_app(test_config=None):
     from . import chart
     app.register_blueprint(chart.bp)
     app.add_url_rule('/', endpoint='index')
+
+    @app.route('/about')
+    def about():
+        return render_template('about/index.html')
 
     return app

@@ -37,11 +37,16 @@ def index():
 
     if error != None or request.method != 'POST':
         script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
+        pagetitle = 'Select ICAO, time window and variable.'
+    else:
+        pagetitle = details['name']+' at '+details['icao']+' over the last '+str(details['time_window'])+' hours'
     if error != None:
         flash(error)
 
+
     return render_template(
         'chart/index.html',
+        pagetitle=pagetitle,
         form=form,
         details=details,
         the_div=div,
