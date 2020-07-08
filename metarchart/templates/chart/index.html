@@ -1,16 +1,39 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<h1>{% block title %}{{ details['name'] }} at {{ details['icao'] }} over the last {{ details['time_window'] }} hours{% endblock %}</h1>
+{% block upper %}
+    <section id="settings">
+        {% macro render_field(field) %}
+            <div class="setting"><dt>{{ field.label }}</dt>
+            <dd>{{ field(**kwargs)|safe }}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="settings-error">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+            </dd></div>
+        {% endmacro %}
+        <form method="post">
+            {{ form.csrf_token }}
+            {{ render_field(form.icao) }}
+            {{ render_field(form.time_window) }}
+            {{ render_field(form.variable) }}
+            {{ form.submit }}
+        </form>
+    </section>
+    <script>
+        function togglesettings() {
+        var x = document.getElementById("settings");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script>
 {% endblock %}
 
 {% block content %}
-    <div id="settings">
-        <form>
-            
-        </form>
-    </div>
-
+    <h1>{% block title %}{{ pagetitle }}{% endblock %}</h1>
     <div style="background:#222222;">{{ the_div|safe }}</div>
     <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>
     {{ the_script|safe }}
