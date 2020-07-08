@@ -42,7 +42,7 @@ def latestMetars(icao, time_window=None):
 def extract(object_list, v=None):
     """Converts a list of python-metar objects into a list of the given variable.
     
-    Accepted variables: wspeed, wgust, wdir.
+    Accepted variables: wspeed, wgust, wdir, temp, dewpt, qnh, vis.
     
     Returns variable name (str), units (str), data (list) and observation times (list)."""
     variable_list, times_list = [], []
@@ -62,6 +62,18 @@ def extract(object_list, v=None):
         elif v == 'wdir':
             variable_list.append(o.wind_dir.value())
             name, units = 'Wind Direction', ''
+        elif v == 'temp':
+            variable_list.append(o.temp.value('C'))
+            name, units = 'Temperature', 'C'
+        elif v == 'dewpt':
+            variable_list.append(o.dewpt.value('C'))
+            name, units = 'Dew Point', 'C'
+        elif v == 'qnh':
+            variable_list.append(o.press.value('MB'))
+            name, units = 'QNH Pressure', 'hPa'
+        elif v == 'vis':
+            variable_list.append(o.vis.value('M'))
+            name, units = 'Visibility', 'M'
         else:
             raise Exception('Valid variable not given. ("{}" was given)'.format(v))
         times_list.append(o.time)
