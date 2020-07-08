@@ -11,11 +11,10 @@
         <li>metarchart</li>
         <li><a href="#">by variable</a></li>
         <li><a href="#">about</a></li>
+        <li><a href="#" onclick="togglesettings()">show/hide settings</a></li>
     </ul>
 </nav>
+{% block upper %}{% endblock %}
 <section class="content">
-    <header>
-        {% block header %}{% endblock %}
-    </header>
     {% block content %}{% endblock %}
 </section>

@@ -10,8 +10,12 @@ def timeLineChart(data, x_name, y_name, details='', width=600, height=150):
 
     if len(details['units'])>0:
         units = ' ('+details['units']+')'
+    else:
+        units = ''
     if len(details['icao'])>0:
         location = ' at '+details['icao'].upper()
+    else:
+        location = ''
 
     xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
    
