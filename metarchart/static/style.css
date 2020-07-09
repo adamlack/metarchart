@@ -9,7 +9,11 @@ nav ul li {display:inline-block;}
 nav ul li:first-child {padding:0 0.6rem;}
 nav ul li a {display:inline-block; padding:1rem 0.6rem;}
 nav ul li a:hover {background:rgb(255, 255, 255, 0.05);}
-nav ul li .active {background:#222; color:rgb(84, 226, 132);}
+nav ul .active {font-weight:bold; color:white;}
+nav ul li svg {fill:#777; height:1.2rem; width:1.2rem;}
+nav ul li svg:hover {fill:white;}
+#settings-cog-href {padding:0; position:relative; top:0.2rem;}
+.settings-cog-active {fill:#aaa;}
 #settings {background:rgba(0,0,0,0.2); margin-bottom:0.8rem;}
 #settings dt, #settings dd, .setting, .settings-error {display:inline-block; margin:0;}
 .settings-error {padding:0.75rem 0.25rem; background:rgb(218, 54, 81); color:rgb(41, 12, 17); border-left:6px solid rgb(139, 23, 42);}

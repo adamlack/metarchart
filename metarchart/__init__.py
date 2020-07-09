@@ -31,6 +31,6 @@ def create_app(test_config=None):
 
     @app.route('/about')
     def about():
-        return render_template('about/index.html')
+        return render_template('about/index.html', settings_visible=False)
 
     return app

@@ -47,8 +47,9 @@ def index():
     return render_template(
         'chart/index.html',
         pagetitle=pagetitle,
+        settings_visible=True,
         form=form,
         details=details,
         the_div=div,
-        the_script=script
+        the_script=script,
     )
