@@ -19,7 +19,7 @@ def index():
             time_window = int(form.time_window.data)
             vname = form.variable.data
         else:
-            error = 'Valid parameters not recieved. Please check request details.'
+            error = 'Valid parameters not received. Please check request details.'
         
         if error is None:
             metar_data = latestMetars(icao, time_window)
