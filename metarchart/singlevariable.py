@@ -44,7 +44,7 @@ def index():
 
     if error != None or request.method != 'POST':
         script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
-        pagetitle = 'Select ICAO, time window and variable.'
+        pagetitle = 'Choose station ICAO, time window and variable.'
     else:
         pagetitle = details['name']+' at '+details['icao']+' over the last '+str(details['time_window'])+' hours'
     if error != None:

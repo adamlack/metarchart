@@ -25,13 +25,17 @@ def index():
             if len(metar_data) > 0:
                 scripts, divs = {}, {}
 
-                name, units, values, times = extract(metar_data, 'wind')
                 data = {}
-                data['Time'] = times
+                name, units, values, data['Time'] = extract(metar_data, 'wind')
                 data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
                 scripts['wind'], divs['wind'] = make_plot.timeLineChartWind(data, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
 
-                for x in ['temp','dewpt','qnh']:
+                data = {}
+                name, units, data['Temperature'], data['Time'] = extract(metar_data, 'temp')
+                data['Dew Point'] = extract(metar_data, 'dewpt')[2]
+                scripts['tempdewpt'], divs['tempdewpt'] = make_plot.timeLineChartTempDewpt(data, {'icao':icao, 'name':'Temperature/Dew Point', 'units':units, 'time_window':time_window})
+
+                for x in ['qnh','vis']:
                     data={}
                     name, units, data[name], data['Time'] = extract(metar_data, x)
                     scripts[name], divs[name] = make_plot.timeLineChart(data, name, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
@@ -40,7 +44,7 @@ def index():
 
     if error != None or request.method != 'POST':
         scripts, divs, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
-        pagetitle = 'Select ICAO, time window and variable.'
+        pagetitle = 'Choose station ICAO and time window.'
     else:
         details = {'icao':icao, 'name':'overview', 'units':'', 'time_window':time_window}
         pagetitle = 'Overview for '+details['icao']+' over the last '+str(details['time_window'])+' hours'

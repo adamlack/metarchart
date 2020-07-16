@@ -7,7 +7,7 @@ from bokeh.models.callbacks import CustomJS
 
 import numpy as np
 
-set_w, set_h = 700, 100
+set_w, set_h = 800, 100
 
 def setLook(plot):
     # Style variables "sv"
@@ -74,7 +74,7 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    sv_plotcolour = '#53f3ae'
+    sv_plotcolour = '#eaea86'
     line_plot = plot.line(
         x='Time',
         y=y_name,
@@ -124,8 +124,8 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
     maxspd, minspd = max(np.nanmax(data['Wind Speed']), np.nanmax(data['Wind Gust']))+1, np.nanmax(min(data['Wind Speed'])-1,0)
     ydr = DataRange1d(start=minspd,end=maxspd)
 
-    sv_plotcolour_spd = '#58df58'
-    sv_plotcolour_dir = '#eddf82'
+    sv_plotcolour_spd = '#53f3ae'
+    sv_plotcolour_dir = '#9f54bb'
 
     plot = figure(
         title = 'Wind'+location,
@@ -187,10 +187,10 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
     plot.yaxis.axis_label = 'Wind speed/gust (KT)'
 
     setLook(plot)
-    plot.yaxis.axis_line_color = sv_plotcolour_spd
-    plot.yaxis.axis_label_text_color = sv_plotcolour_spd
-    plot.yaxis.major_label_text_color = sv_plotcolour_spd
-    plot.yaxis.major_tick_line_color = sv_plotcolour_spd
+    #plot.yaxis.axis_line_color = sv_plotcolour_spd
+    #plot.yaxis.axis_label_text_color = sv_plotcolour_spd
+    #plot.yaxis.major_label_text_color = sv_plotcolour_spd
+    #plot.yaxis.major_tick_line_color = sv_plotcolour_spd
 
     plot.extra_y_ranges['dir'] = DataRange1d(start=0,end=360)
     plot.add_layout(LinearAxis(
@@ -210,11 +210,101 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
         y_range_name='dir',
         line_color=sv_plotcolour_dir,
         line_width=2,
-        line_alpha=0.8,
+        line_alpha=0.6,
         line_join='bevel',
         line_cap='round',
         line_dash='solid',
     )
 
+    
+    return components(plot)
+
+def timeLineChartTempDewpt(data, details='', width=set_w, height=set_h):
+    x_name = 'Time'
+
+    if len(details['icao'])>0:
+        location = ' at '+details['icao'].upper()
+    else:
+        location = ''
+    
+    xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
+    maxt, mint = max(np.nanmax(data['Temperature']), np.nanmax(data['Dew Point']))+1, min(np.nanmin(data['Temperature']),np.nanmin(data['Dew Point']))-1
+    ydr = DataRange1d(start=mint,end=maxt)
+
+    sv_plotcolour_temp = '#be3c3c'
+    sv_plotcolour_dewpt = '#b65d5d'
+
+    plot = figure(
+        title = 'Temperature/Dew Point'+location,
+        plot_width=width,
+        plot_height=height,
+        x_axis_type='datetime',
+        x_range=xdr,
+        y_range=ydr,
+        toolbar_location=None,
+        sizing_mode='scale_width'
+    )
+    temp_plot = plot.line(
+        x='Time',
+        y='Temperature',
+        source=data,
+        line_color=sv_plotcolour_temp,
+        line_width=2, #in px
+        line_alpha=0.8,
+        line_join='bevel',
+        line_cap='round',
+        line_dash='solid',
+    )
+    plot.add_tools(HoverTool(
+        renderers=[temp_plot],
+        tooltips='Temperature @{Temperature} C at @Time{%H%MZ}',
+        mode='vline', # use 'mouse' for only over points
+        formatters={'@Time': 'datetime'},
+        show_arrow=False,
+    ))
+    plot.circle(
+        x='Time',
+        y='Temperature',
+        source=data,
+        size=8,
+        fill_color=sv_plotcolour_temp,
+        fill_alpha=0.5,
+        hover_alpha=0.9,
+        line_alpha=0,
+        hover_line_alpha=0
+    )
+    dewpt_plot = plot.line(
+        x='Time',
+        y='Dew Point',
+        source=data,
+        line_color=sv_plotcolour_dewpt,
+        line_width=2, #in px
+        line_alpha=0.5,
+        line_join='bevel',
+        line_cap='round',
+        line_dash='solid',
+    )
+    plot.add_tools(HoverTool(
+        renderers=[dewpt_plot],
+        tooltips='Dew point @{Dew Point} C at @Time{%H%MZ}',
+        mode='vline', # use 'mouse' for only over points
+        formatters={'@Time': 'datetime'},
+        show_arrow=False,
+    ))
+    plot.circle(
+        x='Time',
+        y='Dew Point',
+        source=data,
+        size=8,
+        fill_color=sv_plotcolour_dewpt,
+        fill_alpha=0.3,
+        hover_alpha=0.9,
+        line_alpha=0,
+        hover_line_alpha=0
+    )
+    plot.yaxis.axis_label = 'Temperature/Dew Point (C)'
+    plot.add_layout(LinearAxis(axis_label='Temperature/Dew Point (C)'), 'right')
+
+    setLook(plot)
     
     return components(plot)
