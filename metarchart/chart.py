@@ -26,14 +26,21 @@ def index():
             name, units, values, times = extract(metar_data, vname)
             data={}
             data['Time'] = times
-            data[name] = values
-
             details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
-
-            if data[name]:
-                script, div = make_plot.timeLineChart(data, "Time", name, details)
+        
+            if name == 'Wind':
+                if values['speed']:
+                    data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
+                    script, div = make_plot.timeLineChartWind(data, details)
+                else:
+                    error = 'No data retrieved. Please check request details.'
             else:
-                error = 'No data retrieved. Please check request details.'
+                data[name] = values
+                
+                if data[name]:
+                    script, div = make_plot.timeLineChart(data, name, details)
+                else:
+                    error = 'No data retrieved. Please check request details.'
 
     if error != None or request.method != 'POST':
         script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}

@@ -13,6 +13,7 @@ class SettingsForm(FlaskForm):
         NumberRange(min=6, max=100, message='Must be between %(min)s and %(max)s hours')
     ])
     variable = SelectField('Variable', validators=[DataRequired()], choices=[
+        ('wind','Wind'),
         ('wspeed','Wind speed'),
         ('wgust','Wind gust (reported)'),
         ('wdir','Wind direction'),
