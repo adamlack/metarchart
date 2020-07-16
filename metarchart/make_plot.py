@@ -50,6 +50,31 @@ def setLook(plot):
 
     return True
 
+def makeLinePlot(plot, data, y_name, colour, line_alpha=0.8):
+    return plot.line(
+                x='Time',
+                y=y_name,
+                source=data,
+                line_color=colour,
+                line_width=2,
+                line_alpha=line_alpha,
+                line_join='bevel',
+                line_cap='round',
+                line_dash='solid',
+            )
+def makeCirclePlot(plot, data, y_name, colour, size=8):
+    return plot.circle(
+                x='Time',
+                y=y_name,
+                source=data,
+                size=size,
+                fill_color=colour,
+                fill_alpha=0.5,
+                hover_alpha=0.9,
+                line_alpha=0,
+                hover_line_alpha=0
+            )
+
 def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
     x_name = 'Time'
     #source = ColumnDataSource(data)
@@ -75,17 +100,10 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         sizing_mode='scale_width'
     )
     sv_plotcolour = '#eaea86'
-    line_plot = plot.line(
-        x='Time',
-        y=y_name,
-        source=data,
-        line_color=sv_plotcolour,
-        line_width=2, #in px
-        line_alpha=0.8,
-        line_join='bevel',
-        line_cap='round',
-        line_dash='solid',
-    )
+
+    makeCirclePlot(plot, data, y_name, sv_plotcolour)
+    line_plot = makeLinePlot(plot, data, y_name, sv_plotcolour)
+
     tooltip_str = '@{'+y_name+'} '+units[2:-1]+' at @Time{%H%MZ}'
     plot.add_tools(HoverTool(
         renderers=[line_plot],
@@ -94,17 +112,7 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
-    plot.circle(
-        x='Time',
-        y=y_name,
-        source=data,
-        size=8,
-        fill_color=sv_plotcolour,
-        fill_alpha=0.5,
-        hover_alpha=0.9,
-        line_alpha=0,
-        hover_line_alpha=0
-    )
+
     plot.yaxis.axis_label = y_name+units
     plot.add_layout(LinearAxis(axis_label=y_name+units), 'right')
 
@@ -137,17 +145,8 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    speed_plot = plot.line(
-        x='Time',
-        y='Wind Speed',
-        source=data,
-        line_color=sv_plotcolour_spd,
-        line_width=2, #in px
-        line_alpha=0.8,
-        line_join='bevel',
-        line_cap='round',
-        line_dash='solid',
-    )
+    makeCirclePlot(plot, data, 'Wind Speed', sv_plotcolour_spd)
+    speed_plot = makeLinePlot(plot, data, 'Wind Speed', sv_plotcolour_spd)
     plot.add_tools(HoverTool(
         renderers=[speed_plot],
         tooltips='@{Wind Direction} @{Wind Speed}KT at @Time{%H%MZ}',
@@ -155,28 +154,7 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
-    plot.circle(
-        x='Time',
-        y='Wind Speed',
-        source=data,
-        size=8,
-        fill_color=sv_plotcolour_spd,
-        fill_alpha=0.5,
-        hover_alpha=0.9,
-        line_alpha=0,
-        hover_line_alpha=0
-    )
-    gust_plot = plot.circle(
-        x='Time',
-        y='Wind Gust',
-        source=data,
-        size=14,
-        fill_color=sv_plotcolour_spd,
-        fill_alpha=0.5,
-        hover_alpha=0.9,
-        line_alpha=0,
-        hover_line_alpha=0
-    )
+    gust_plot = makeCirclePlot(plot, data, 'Wind Gust', sv_plotcolour_spd, size=12)
     plot.add_tools(HoverTool(
         renderers=[gust_plot],
         tooltips='Reported gust of @{Wind Gust}KT at @Time{%H%MZ}',
@@ -202,20 +180,8 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
         major_tick_line_color=sv_plotcolour_dir,
         minor_tick_line_color=sv_plotcolour_dir
     ), 'right')
-
-    plot.line(
-        x='Time',
-        y='Wind Direction',
-        source=data,
-        y_range_name='dir',
-        line_color=sv_plotcolour_dir,
-        line_width=2,
-        line_alpha=0.6,
-        line_join='bevel',
-        line_cap='round',
-        line_dash='solid',
-    )
-
+    dir_plot = makeLinePlot(plot, data, 'Wind Direction', sv_plotcolour_dir, line_alpha=0.5)
+    dir_plot.y_range_name='dir'
     
     return components(plot)
 
@@ -244,17 +210,8 @@ def timeLineChartTempDewpt(data, details='', width=set_w, height=set_h):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    temp_plot = plot.line(
-        x='Time',
-        y='Temperature',
-        source=data,
-        line_color=sv_plotcolour_temp,
-        line_width=2, #in px
-        line_alpha=0.8,
-        line_join='bevel',
-        line_cap='round',
-        line_dash='solid',
-    )
+    makeCirclePlot(plot, data, 'Temperature', sv_plotcolour_temp)
+    temp_plot = makeLinePlot(plot, data, 'Temperature', sv_plotcolour_temp)
     plot.add_tools(HoverTool(
         renderers=[temp_plot],
         tooltips='Temperature @{Temperature} C at @Time{%H%MZ}',
@@ -262,28 +219,8 @@ def timeLineChartTempDewpt(data, details='', width=set_w, height=set_h):
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
-    plot.circle(
-        x='Time',
-        y='Temperature',
-        source=data,
-        size=8,
-        fill_color=sv_plotcolour_temp,
-        fill_alpha=0.5,
-        hover_alpha=0.9,
-        line_alpha=0,
-        hover_line_alpha=0
-    )
-    dewpt_plot = plot.line(
-        x='Time',
-        y='Dew Point',
-        source=data,
-        line_color=sv_plotcolour_dewpt,
-        line_width=2, #in px
-        line_alpha=0.5,
-        line_join='bevel',
-        line_cap='round',
-        line_dash='solid',
-    )
+    makeCirclePlot(plot, data, 'Dew Point', sv_plotcolour_dewpt)
+    dewpt_plot = makeLinePlot(plot, data, 'Dew Point', sv_plotcolour_dewpt, line_alpha=0.5)
     plot.add_tools(HoverTool(
         renderers=[dewpt_plot],
         tooltips='Dew point @{Dew Point} C at @Time{%H%MZ}',
@@ -291,17 +228,7 @@ def timeLineChartTempDewpt(data, details='', width=set_w, height=set_h):
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
-    plot.circle(
-        x='Time',
-        y='Dew Point',
-        source=data,
-        size=8,
-        fill_color=sv_plotcolour_dewpt,
-        fill_alpha=0.3,
-        hover_alpha=0.9,
-        line_alpha=0,
-        hover_line_alpha=0
-    )
+
     plot.yaxis.axis_label = 'Temperature/Dew Point (C)'
     plot.add_layout(LinearAxis(axis_label='Temperature/Dew Point (C)'), 'right')
 
