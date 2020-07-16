@@ -71,7 +71,11 @@ def extract(object_list, v=None):
                 variable_list.append(x)
                 name, units = 'Wind Gust', 'KT'
             elif v == 'wdir':
-                variable_list.append(o.wind_dir.value())
+                if o.wind_dir:
+                    x = o.wind_dir.value()
+                else:
+                    x = float('nan')
+                variable_list.append(x)
                 name, units = 'Wind Direction', ''
             elif v == 'temp':
                 variable_list.append(o.temp.value('C'))
