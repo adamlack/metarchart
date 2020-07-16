@@ -74,7 +74,7 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    sv_plotcolour = '#5afaad'
+    sv_plotcolour = '#53f3ae'
     line_plot = plot.line(
         x='Time',
         y=y_name,
@@ -94,7 +94,6 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
-    #tooltip css styled manually with .bk-tooltip
     plot.circle(
         x='Time',
         y=y_name,
@@ -107,9 +106,10 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         hover_line_alpha=0
     )
     plot.yaxis.axis_label = y_name+units
+    plot.add_layout(LinearAxis(axis_label=y_name+units), 'right')
 
     setLook(plot)
-    
+
     return components(plot)
 
 def timeLineChartWind(data, details='', width=set_w, height=set_h):
@@ -124,7 +124,7 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
     maxspd, minspd = max(np.nanmax(data['Wind Speed']), np.nanmax(data['Wind Gust']))+1, np.nanmax(min(data['Wind Speed'])-1,0)
     ydr = DataRange1d(start=minspd,end=maxspd)
 
-    sv_plotcolour_spd = '#5afaad'
+    sv_plotcolour_spd = '#58df58'
     sv_plotcolour_dir = '#eddf82'
 
     plot = figure(
