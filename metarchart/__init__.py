@@ -25,9 +25,13 @@ def create_app(test_config=None):
     def hello():
         return('Hello, world!')
 
-    from . import chart
-    app.register_blueprint(chart.bp)
+    from . import overview
+    app.register_blueprint(overview.bp)
     app.add_url_rule('/', endpoint='index')
+
+    from . import singlevariable
+    app.register_blueprint(singlevariable.bp)
+    app.add_url_rule('/singlevariable', endpoint='index')
 
     @app.route('/about')
     def about():

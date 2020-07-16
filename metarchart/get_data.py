@@ -43,39 +43,50 @@ def extract(object_list, v=None):
     """Converts a list of python-metar objects into a list of the given variable.
     
     Accepted variables: wspeed, wgust, wdir, temp, dewpt, qnh, vis.
+
+    Can also use wind, which returns a dict of speed, gust and direction.
     
     Returns variable name (str), units (str), data (list) and observation times (list)."""
     variable_list, times_list = [], []
     name = ''
     units = None
-    for o in object_list:
-        if v == 'wspeed':
-            variable_list.append(o.wind_speed.value('KT'))
-            name, units = 'Wind Speed', 'KT'
-        elif v == 'wgust':
-            if o.wind_gust:
-                x = o.wind_gust.value('KT')
+
+    if v == 'wind':
+        variable_list = {'speed':[],'gust':[],'direction':[]}
+        speed_extraction = extract(object_list, v='wspeed')
+        variable_list['speed'], times_list = speed_extraction[2], speed_extraction[3]
+        variable_list['gust'] = extract(object_list, v='wgust')[2]
+        variable_list['direction'] = extract(object_list, v='wdir')[2]
+        name, units = 'Wind', ''
+    else:
+        for o in object_list:
+            if v == 'wspeed':
+                variable_list.append(o.wind_speed.value('KT'))
+                name, units = 'Wind Speed', 'KT'
+            elif v == 'wgust':
+                if o.wind_gust:
+                    x = o.wind_gust.value('KT')
+                else:
+                    x = float('nan')
+                variable_list.append(x)
+                name, units = 'Wind Gust', 'KT'
+            elif v == 'wdir':
+                variable_list.append(o.wind_dir.value())
+                name, units = 'Wind Direction', ''
+            elif v == 'temp':
+                variable_list.append(o.temp.value('C'))
+                name, units = 'Temperature', 'C'
+            elif v == 'dewpt':
+                variable_list.append(o.dewpt.value('C'))
+                name, units = 'Dew Point', 'C'
+            elif v == 'qnh':
+                variable_list.append(o.press.value('MB'))
+                name, units = 'QNH Pressure', 'hPa'
+            elif v == 'vis':
+                variable_list.append(o.vis.value('M'))
+                name, units = 'Visibility', 'M'
             else:
-                x = None
-            variable_list.append(x)
-            name, units = 'Wind Gust', 'KT'
-        elif v == 'wdir':
-            variable_list.append(o.wind_dir.value())
-            name, units = 'Wind Direction', ''
-        elif v == 'temp':
-            variable_list.append(o.temp.value('C'))
-            name, units = 'Temperature', 'C'
-        elif v == 'dewpt':
-            variable_list.append(o.dewpt.value('C'))
-            name, units = 'Dew Point', 'C'
-        elif v == 'qnh':
-            variable_list.append(o.press.value('MB'))
-            name, units = 'QNH Pressure', 'hPa'
-        elif v == 'vis':
-            variable_list.append(o.vis.value('M'))
-            name, units = 'Visibility', 'M'
-        else:
-            raise Exception('Valid variable not given. ("{}" was given)'.format(v))
-        times_list.append(o.time)
+                raise Exception('Valid variable not given. ("{}" was given)'.format(v))
+            times_list.append(o.time)
 
     return name, units, variable_list, times_list
