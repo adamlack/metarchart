@@ -17,7 +17,6 @@
             {{ form.csrf_token }}
             {{ render_field(form.icao) }}
             {{ render_field(form.time_window) }}
-            {{ render_field(form.variable) }}
             {{ form.submit }}
         </form>
     </section>
@@ -25,7 +24,11 @@
 
 {% block content %}
     <h1>{% block title %}{{ pagetitle }}{% endblock %}</h1>
-    <div style="background:#222222;">{{ the_div|safe }}</div>
+    {% for key in the_divs %}
+        <div style="background:#222222;">{{ the_divs[key]|safe }}</div>
+    {% endfor %}
     <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>
-    {{ the_script|safe }}
+    {% for key in the_scripts %}
+        {{ the_scripts[key]|safe }}
+        {% endfor %}
 {% endblock %}

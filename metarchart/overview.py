@@ -2,7 +2,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
 from werkzeug.exceptions import abort
-from .forms import SettingsForm
+from .forms import OverviewSettingsForm
 
 from .get_data import latestMetars, extract
 from . import make_plot
@@ -11,42 +11,39 @@ bp = Blueprint('overview', __name__)
 
 @bp.route('/', methods=('GET','POST'))
 def index():
-    form = SettingsForm()
+    form = OverviewSettingsForm()
     error = None
     if request.method == 'POST':
         if form.validate_on_submit():
             icao = form.icao.data.upper()
             time_window = int(form.time_window.data)
-            vname = form.variable.data
         else:
             error = 'Valid parameters not received. Please check request details.'
         
         if error is None:
             metar_data = latestMetars(icao, time_window)
-            name, units, values, times = extract(metar_data, vname)
-            data={}
-            data['Time'] = times
-            details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
-        
-            if name == 'Wind':
-                if values['speed']:
-                    data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
-                    script, div = make_plot.timeLineChartWind(data, details)
-                else:
-                    error = 'No data retrieved. Please check request details.'
+            if len(metar_data) > 0:
+                scripts, divs = {}, {}
+
+                name, units, values, times = extract(metar_data, 'wind')
+                data = {}
+                data['Time'] = times
+                data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
+                scripts['wind'], divs['wind'] = make_plot.timeLineChartWind(data, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
+
+                for x in ['temp','dewpt','qnh']:
+                    data={}
+                    name, units, data[name], data['Time'] = extract(metar_data, x)
+                    scripts[name], divs[name] = make_plot.timeLineChart(data, name, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
             else:
-                data[name] = values
-                
-                if data[name]:
-                    script, div = make_plot.timeLineChart(data, name, details)
-                else:
-                    error = 'No data retrieved. Please check request details.'
+                error = 'No data retrieved. Please check request details.'
 
     if error != None or request.method != 'POST':
-        script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
+        scripts, divs, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
         pagetitle = 'Select ICAO, time window and variable.'
     else:
-        pagetitle = 'OVERVIEW: '+details['name']+' at '+details['icao']+' over the last '+str(details['time_window'])+' hours'
+        details = {'icao':icao, 'name':'overview', 'units':'', 'time_window':time_window}
+        pagetitle = 'Overview for '+details['icao']+' over the last '+str(details['time_window'])+' hours'
     if error != None:
         flash(error)
 
@@ -57,6 +54,6 @@ def index():
         settings_visible=True,
         form=form,
         details=details,
-        the_div=div,
-        the_script=script,
+        the_divs=divs,
+        the_scripts=scripts,
     )

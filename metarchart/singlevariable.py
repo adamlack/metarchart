@@ -2,7 +2,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
 from werkzeug.exceptions import abort
-from .forms import SettingsForm
+from .forms import VariableSettingsForm
 
 from .get_data import latestMetars, extract
 from . import make_plot
@@ -11,7 +11,7 @@ bp = Blueprint('singlevariable', __name__)
 
 @bp.route('/singlevariable', methods=('GET','POST'))
 def index():
-    form = SettingsForm()
+    form = VariableSettingsForm()
     error = None
     if request.method == 'POST':
         if form.validate_on_submit():

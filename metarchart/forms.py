@@ -2,8 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField, SubmitField
 from wtforms.validators import DataRequired, Regexp, NumberRange
 
-class SettingsForm(FlaskForm):
-    """Settings form"""
+class VariableSettingsForm(FlaskForm):
+    """Single variable settings form"""
     icao = StringField('ICAO', validators=[
         DataRequired(),
         Regexp(r'([a-zA-Z]{4})$', message='Not a valid ICAO')
@@ -21,5 +21,17 @@ class SettingsForm(FlaskForm):
         ('dewpt','Dew point'),
         ('qnh','QNH Pressure'),
         ('vis','Visibility')
+    ])
+    submit = SubmitField('Submit')
+
+class OverviewSettingsForm(FlaskForm):
+    """Station overview settings form"""
+    icao = StringField('ICAO', validators=[
+        DataRequired(),
+        Regexp(r'([a-zA-Z]{4})$', message='Not a valid ICAO')
+    ])
+    time_window = IntegerField('Time window (hours)', default=12, validators=[
+        DataRequired(),
+        NumberRange(min=6, max=100, message='Must be between %(min)s and %(max)s hours')
     ])
     submit = SubmitField('Submit')
