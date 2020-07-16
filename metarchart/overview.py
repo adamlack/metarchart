@@ -7,7 +7,7 @@ from .forms import SettingsForm
 from .get_data import latestMetars, extract
 from . import make_plot
 
-bp = Blueprint('chart', __name__)
+bp = Blueprint('overview', __name__)
 
 @bp.route('/', methods=('GET','POST'))
 def index():
@@ -46,13 +46,13 @@ def index():
         script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
         pagetitle = 'Select ICAO, time window and variable.'
     else:
-        pagetitle = details['name']+' at '+details['icao']+' over the last '+str(details['time_window'])+' hours'
+        pagetitle = 'OVERVIEW: '+details['name']+' at '+details['icao']+' over the last '+str(details['time_window'])+' hours'
     if error != None:
         flash(error)
 
 
     return render_template(
-        'chart/index.html',
+        'overview/index.html',
         pagetitle=pagetitle,
         settings_visible=True,
         form=form,
