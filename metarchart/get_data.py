@@ -61,36 +61,80 @@ def extract(object_list, v=None):
     else:
         for o in object_list:
             if v == 'wspeed':
-                variable_list.append(o.wind_speed.value('KT'))
+                if o.wind_speed:
+                    x = o.wind_speed.value('KT')
+                else:
+                    x = float('nan')
                 name, units = 'Wind Speed', 'KT'
             elif v == 'wgust':
                 if o.wind_gust:
                     x = o.wind_gust.value('KT')
                 else:
                     x = float('nan')
-                variable_list.append(x)
                 name, units = 'Wind Gust', 'KT'
             elif v == 'wdir':
                 if o.wind_dir:
                     x = o.wind_dir.value()
                 else:
                     x = float('nan')
-                variable_list.append(x)
                 name, units = 'Wind Direction', ''
             elif v == 'temp':
-                variable_list.append(o.temp.value('C'))
+                x = o.temp.value('C')
                 name, units = 'Temperature', 'C'
             elif v == 'dewpt':
-                variable_list.append(o.dewpt.value('C'))
+                x = o.dewpt.value('C')
                 name, units = 'Dew Point', 'C'
             elif v == 'qnh':
-                variable_list.append(o.press.value('MB'))
+                x = o.press.value('MB')
                 name, units = 'QNH Pressure', 'hPa'
             elif v == 'vis':
-                variable_list.append(o.vis.value('M'))
+                if o.vis:
+                    if o.vis.value('M') == 10000:
+                        x = 9999
+                    else:
+                        x = o.vis.value('M')
+                else:
+                    x = float('nan')
                 name, units = 'Visibility', 'M'
             else:
                 raise Exception('Valid variable not given. ("{}" was given)'.format(v))
+            variable_list.append(x)
             times_list.append(o.time)
 
     return name, units, variable_list, times_list
+
+cstate = {'blue':'#3070f0','white':'white','green':'#2ba141','yellow':'yellow','amber':'#ffa436','red':'red','other':'pink',}
+
+def applyVisColourState(v):
+    if v>7999:
+        c=cstate['blue']
+    elif v>4999:
+        c=cstate['white']
+    elif v>3699:
+        c=cstate['green']
+    elif v>1599:
+        c=cstate['yellow']
+    elif v>799:
+        c=cstate['amber']
+    elif v>=0:
+        c=cstate['red']
+    else:
+        c=cstate['other']
+    return c
+
+def applyCloudColourState(b):
+    if b>2499:
+        c=cstate['blue']
+    elif b>1499:
+        c=cstate['white']
+    elif b>699:
+        c=cstate['green']
+    elif b>299:
+        c=cstate['yellow']
+    elif b>199:
+        c=cstate['amber']
+    elif b>=0:
+        c=cstate['red']
+    else:
+        c=cstate['other']
+    return c

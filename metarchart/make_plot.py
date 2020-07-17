@@ -1,4 +1,4 @@
-from bokeh.models import HoverTool, DataRange1d, LinearAxis
+from bokeh.models import HoverTool, DataRange1d, LinearAxis, CustomJS
 from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.models.sources import ColumnDataSource
@@ -231,6 +231,52 @@ def timeLineChartTempDewpt(data, details='', width=set_w, height=set_h):
 
     plot.yaxis.axis_label = 'Temperature/Dew Point (C)'
     plot.add_layout(LinearAxis(axis_label='Temperature/Dew Point (C)'), 'right')
+
+    setLook(plot)
+    
+    return components(plot)
+
+def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
+    x_name = 'Time'
+
+    if len(details['icao'])>0:
+        location = ' at '+details['icao'].upper()
+    else:
+        location = ''
+    
+    xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
+    ydr = DataRange1d(start=0,end=10000)
+
+    sv_plotcolour_vis = 'white'
+
+    plot = figure(
+        title = 'Visibility'+location,
+        plot_width=width,
+        plot_height=height,
+        x_axis_type='datetime',
+        x_range=xdr,
+        y_range=ydr,
+        toolbar_location=None,
+        sizing_mode='scale_width'
+    )
+    from .get_data import applyVisColourState
+    colourstates = []
+    for v in data['Visibility']:
+        colourstates.append(applyVisColourState(v))
+    data['colourstates']=colourstates
+    makeCirclePlot(plot, data, 'Visibility', 'colourstates', size=12)
+    vis_plot = makeLinePlot(plot, data, 'Visibility', sv_plotcolour_vis, line_alpha=0.2)
+    plot.add_tools(HoverTool(
+        renderers=[vis_plot],
+        tooltips='@{Visibility}M at @Time{%H%MZ}',
+        mode='vline', # use 'mouse' for only over points
+        formatters={'@Time': 'datetime'},
+        show_arrow=False,
+    ))
+
+    plot.yaxis.axis_label = 'Visibility (M)'
+    plot.add_layout(LinearAxis(axis_label='Visibility (M)'), 'right')
+    plot.yaxis.major_label_overrides = {10000:'10K+'}
 
     setLook(plot)
     

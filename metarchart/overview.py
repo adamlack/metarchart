@@ -35,7 +35,11 @@ def index():
                 data['Dew Point'] = extract(metar_data, 'dewpt')[2]
                 scripts['tempdewpt'], divs['tempdewpt'] = make_plot.timeLineChartTempDewpt(data, {'icao':icao, 'name':'Temperature/Dew Point', 'units':units, 'time_window':time_window})
 
-                for x in ['qnh','vis']:
+                data = {}
+                name, units, data['Visibility'], data['Time'] = extract(metar_data, 'vis')
+                scripts['visibility'], divs['visibility'] = make_plot.timeLineChartVisibility(data, {'icao':icao, 'name':'Visibility', 'units':units, 'time_window':time_window})
+
+                for x in ['qnh']:
                     data={}
                     name, units, data[name], data['Time'] = extract(metar_data, x)
                     scripts[name], divs[name] = make_plot.timeLineChart(data, name, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
