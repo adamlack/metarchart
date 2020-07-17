@@ -42,7 +42,7 @@ def latestMetars(icao, time_window=None):
 def extract(object_list, v=None):
     """Converts a list of python-metar objects into a list of the given variable.
     
-    Accepted variables: wspeed, wgust, wdir, temp, dewpt, qnh, vis.
+    Accepted variables: cloudbase, wspeed, wgust, wdir, temp, dewpt, qnh, vis.
 
     Can also use wind, which returns a dict of speed, gust and direction.
     
@@ -60,46 +60,57 @@ def extract(object_list, v=None):
         name, units = 'Wind', ''
     else:
         for o in object_list:
-            if v == 'wspeed':
-                if o.wind_speed:
-                    x = o.wind_speed.value('KT')
+            if v == 'cloudbase':
+                if o.sky: #cover, height, cloud
+                    for layer in o.sky:
+                        if layer[1]:
+                            variable_list.append(layer[1].value('FT'))
+                            times_list.append(o.time)
                 else:
-                    x = float('nan')
-                name, units = 'Wind Speed', 'KT'
-            elif v == 'wgust':
-                if o.wind_gust:
-                    x = o.wind_gust.value('KT')
-                else:
-                    x = float('nan')
-                name, units = 'Wind Gust', 'KT'
-            elif v == 'wdir':
-                if o.wind_dir:
-                    x = o.wind_dir.value()
-                else:
-                    x = float('nan')
-                name, units = 'Wind Direction', ''
-            elif v == 'temp':
-                x = o.temp.value('C')
-                name, units = 'Temperature', 'C'
-            elif v == 'dewpt':
-                x = o.dewpt.value('C')
-                name, units = 'Dew Point', 'C'
-            elif v == 'qnh':
-                x = o.press.value('MB')
-                name, units = 'QNH Pressure', 'hPa'
-            elif v == 'vis':
-                if o.vis:
-                    if o.vis.value('M') == 10000:
-                        x = 9999
-                    else:
-                        x = o.vis.value('M')
-                else:
-                    x = float('nan')
-                name, units = 'Visibility', 'M'
+                    variable_list.append(float('nan'))
+                    times_list.append(o.time)
+                name, units = 'Cloud Base', 'FT'
             else:
-                raise Exception('Valid variable not given. ("{}" was given)'.format(v))
-            variable_list.append(x)
-            times_list.append(o.time)
+                if v == 'wspeed':
+                    if o.wind_speed:
+                        x = o.wind_speed.value('KT')
+                    else:
+                        x = float('nan')
+                    name, units = 'Wind Speed', 'KT'
+                elif v == 'wgust':
+                    if o.wind_gust:
+                        x = o.wind_gust.value('KT')
+                    else:
+                        x = float('nan')
+                    name, units = 'Wind Gust', 'KT'
+                elif v == 'wdir':
+                    if o.wind_dir:
+                        x = o.wind_dir.value()
+                    else:
+                        x = float('nan')
+                    name, units = 'Wind Direction', ''
+                elif v == 'temp':
+                    x = o.temp.value('C')
+                    name, units = 'Temperature', 'C'
+                elif v == 'dewpt':
+                    x = o.dewpt.value('C')
+                    name, units = 'Dew Point', 'C'
+                elif v == 'qnh':
+                    x = o.press.value('MB')
+                    name, units = 'QNH Pressure', 'hPa'
+                elif v == 'vis':
+                    if o.vis:
+                        if o.vis.value('M') == 10000:
+                            x = 9999
+                        else:
+                            x = o.vis.value('M')
+                    else:
+                        x = float('nan')
+                    name, units = 'Visibility', 'M'
+                else:
+                    raise Exception('Valid variable not given. ("{}" was given)'.format(v))
+                variable_list.append(x)
+                times_list.append(o.time)
 
     return name, units, variable_list, times_list
 

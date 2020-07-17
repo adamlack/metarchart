@@ -281,3 +281,47 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
     setLook(plot)
     
     return components(plot)
+
+def timeChartCloud(data, details='', width=set_w, height=set_h*2):
+    x_name = 'Time'
+
+    if len(details['icao'])>0:
+        location = ' at '+details['icao'].upper()
+    else:
+        location = ''
+    
+    xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
+    ydr = DataRange1d(start=0,end=15000)
+
+    sv_plotcolour_vis = 'white'
+
+    plot = figure(
+        title = 'Cloud base'+location,
+        plot_width=width,
+        plot_height=height,
+        x_axis_type='datetime',
+        x_range=xdr,
+        y_range=ydr,
+        toolbar_location=None,
+        sizing_mode='scale_width'
+    )
+    from .get_data import applyCloudColourState
+    colourstates = []
+    for b in data[details['name']]:
+        colourstates.append(applyCloudColourState(b))
+    data['colourstates']=colourstates
+    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base', 'colourstates', size=12)
+    plot.add_tools(HoverTool(
+        renderers=[cloud_plot],
+        tooltips='@{Cloud Base}FT at @Time{%H%MZ}',
+        mode='vline', # use 'mouse' for only over points
+        formatters={'@Time': 'datetime'},
+        show_arrow=False,
+    ))
+
+    plot.yaxis.axis_label = 'Height (FT)'
+    plot.add_layout(LinearAxis(axis_label='Height (FT)'), 'right')
+
+    setLook(plot)
+    
+    return components(plot)

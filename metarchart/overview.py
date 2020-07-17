@@ -26,6 +26,10 @@ def index():
                 scripts, divs = {}, {}
 
                 data = {}
+                name, units, data['Cloud Base'], data['Time'] = extract(metar_data, 'cloudbase')
+                scripts['cloudbase'], divs['cloudbase'] = make_plot.timeChartCloud(data, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
+
+                data = {}
                 name, units, values, data['Time'] = extract(metar_data, 'wind')
                 data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
                 scripts['wind'], divs['wind'] = make_plot.timeLineChartWind(data, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})

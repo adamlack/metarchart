@@ -28,7 +28,19 @@ def index():
             data['Time'] = times
             details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
         
-            if name == 'Wind':
+            if name == 'Cloud Base':
+                data[name] = values
+                if data[name]:
+                    script, div = make_plot.timeChartCloud(data, details)
+                else:
+                    error = 'No data retrieved. Please check request details.'
+            elif name == 'Visibility':
+                data[name] = values
+                if data[name]:
+                    script, div = make_plot.timeLineChartVisibility(data, details)
+                else:
+                    error = 'No data retrieved. Please check request details.'
+            elif name == 'Wind':
                 if values['speed']:
                     data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
                     script, div = make_plot.timeLineChartWind(data, details)
