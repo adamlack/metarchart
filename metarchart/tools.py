@@ -1,4 +1,5 @@
 import datetime
+import numpy as np
 
 # Set colours to use for applying colour states on cloud and visibility
 cstate = {'blue':'#3070f0','white':'white','green':'#2ba141','yellow':'yellow','amber':'#ffa436','red':'red','other':'pink',}
@@ -38,8 +39,7 @@ def applyCloudColourState(b):
     return c
 
 def heightMap(icao=None):
-    """Map of coordinates for simulating the Met Office Visio cross
-    section height scale for a particular station"""
+    """Map of coordinates for simulating the Met Office Visio cross section height scale for a particular station"""
     if icao != None:
         maps = {}
         # maps['icao'] = [[<<pixel height of each section on x-sect ("up to top...")>>],[<<Tops of each section in FT>>]]
@@ -59,6 +59,49 @@ def heightMap(icao=None):
         return maps[icao.lower()][0], maps[icao.lower()][1], maps[icao.lower()][2]
     else:
         return None
+
+def getHeightmapTicks(icao):
+    """For a given icao, returns the converted cloudbase height ticks (list), and those heights next to tick labels for their actual equivalent heights (dict)."""
+    if icao != None:
+        scale_heights, actual_heights, top = heightMap(icao)
+        ticks, labels, x = [], {}, 0
+        for i in range(len(scale_heights)-2):
+            x = x+scale_heights[i]
+            ticks.append(x)
+            labels[x] = str(actual_heights[i])
+        return ticks, labels
+    else:
+        return None
+
+def mapHeight(h, icao, gliding=None):
+    """Maps a cloud height into coordinates to simulate the Met Office Visio cross
+    section height scale"""
+    if h == None:
+        return np.nan
+    else:
+        if gliding == True:
+            icao = str(icao)+'_gliding'
+        
+        scale_height, section_top, chart_top = heightMap(icao)
+
+        # Check which section height falls in and scale accordingly
+        section_scale_height = scale_height[0]
+        section_base_index = 0
+        section_base_scaled = 0
+        h_in_section = h
+        section_depth = section_top[0]
+        if h <= chart_top:
+            for i in range(len(section_top)-1): # Work upwards through heights
+                if h > section_top[i]:
+                    section_scale_height = scale_height[i+1]
+                    h_in_section = h - section_top[i] # Get amount of height in section
+                    section_base_scaled = section_base_scaled + scale_height[i]
+                    section_depth = section_top[i+1] - section_top[i]
+            h_section_pc = float(h_in_section)/float(section_depth) # Find amount in section as a percentage
+        else:
+            h_section_pc = np.nan # Doesn't matter in case of height off top of chart
+
+        return (h_section_pc*float(section_scale_height))+section_base_scaled
 
 def wintertimeCheck(now):
     wintertime = False

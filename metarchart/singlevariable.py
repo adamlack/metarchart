@@ -29,7 +29,9 @@ def index():
             details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
         
             if name == 'Cloud Base':
-                data[name] = values
+                data[name] = values 
+                from .tools import mapHeight
+                data['Cloud Base Adjusted'] = [mapHeight(h, icao) for h in data['Cloud Base']]
                 if data[name]:
                     script, div = make_plot.timeChartCloud(data, details)
                 else:

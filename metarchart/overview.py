@@ -25,8 +25,10 @@ def index():
             if len(metar_data) > 0:
                 scripts, divs = {}, {}
 
+                from .tools import mapHeight
                 data = {}
                 name, units, data['Cloud Base'], data['Time'] = extract(metar_data, 'cloudbase')
+                data['Cloud Base Adjusted'] = [mapHeight(h, icao) for h in data['Cloud Base']]
                 scripts['cloudbase'], divs['cloudbase'] = make_plot.timeChartCloud(data, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
 
                 data = {}

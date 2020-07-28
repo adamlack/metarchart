@@ -6,6 +6,7 @@ from bokeh.models.formatters import DatetimeTickFormatter
 from bokeh.models.callbacks import CustomJS
 
 import numpy as np
+from .tools import heightMap, getHeightmapTicks, mapHeight, applyCloudColourState, applyVisColourState
 
 set_w, set_h = 800, 100
 
@@ -259,7 +260,6 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    from .tools import applyVisColourState
     colourstates = []
     for v in data['Visibility']:
         colourstates.append(applyVisColourState(v))
@@ -284,14 +284,16 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
 
 def timeChartCloud(data, details='', width=set_w, height=set_h*2):
     x_name = 'Time'
+    icao = details['icao']
 
-    if len(details['icao'])>0:
-        location = ' at '+details['icao'].upper()
+    if len(icao)>0:
+        location = ' at '+icao.upper()
     else:
         location = ''
     
     xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
-    ydr = DataRange1d(start=0,end=15000)
+    #ydr = DataRange1d(start=0,end=15000)
+    ydr = DataRange1d(start=mapHeight(0, icao),end=mapHeight(15000, icao))
 
     sv_plotcolour_vis = 'white'
 
@@ -305,22 +307,26 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    from .tools import applyCloudColourState
     colourstates = []
-    for b in data[details['name']]:
+    for b in data['Cloud Base']:
         colourstates.append(applyCloudColourState(b))
     data['colourstates']=colourstates
-    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base', 'colourstates', size=12)
+    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=15)
+    
     plot.add_tools(HoverTool(
         renderers=[cloud_plot],
         tooltips='@{Cloud Base}FT at @Time{%H%MZ}',
-        mode='vline', # use 'mouse' for only over points
+        mode='mouse', # use 'mouse' for only over points
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
 
     plot.yaxis.axis_label = 'Height (FT)'
     plot.add_layout(LinearAxis(axis_label='Height (FT)'), 'right')
+
+    tick_vals, tick_label_overrides = getHeightmapTicks(icao)
+    plot.yaxis.ticker = tick_vals
+    plot.yaxis.major_label_overrides = tick_label_overrides
 
     setLook(plot)
     
