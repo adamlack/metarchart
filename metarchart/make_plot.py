@@ -259,7 +259,7 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    from .get_data import applyVisColourState
+    from .tools import applyVisColourState
     colourstates = []
     for v in data['Visibility']:
         colourstates.append(applyVisColourState(v))
@@ -305,7 +305,7 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
         toolbar_location=None,
         sizing_mode='scale_width'
     )
-    from .get_data import applyCloudColourState
+    from .tools import applyCloudColourState
     colourstates = []
     for b in data[details['name']]:
         colourstates.append(applyCloudColourState(b))

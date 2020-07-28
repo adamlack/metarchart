@@ -113,39 +113,3 @@ def extract(object_list, v=None):
                 times_list.append(o.time)
 
     return name, units, variable_list, times_list
-
-cstate = {'blue':'#3070f0','white':'white','green':'#2ba141','yellow':'yellow','amber':'#ffa436','red':'red','other':'pink',}
-
-def applyVisColourState(v):
-    if v>7999:
-        c=cstate['blue']
-    elif v>4999:
-        c=cstate['white']
-    elif v>3699:
-        c=cstate['green']
-    elif v>1599:
-        c=cstate['yellow']
-    elif v>799:
-        c=cstate['amber']
-    elif v>=0:
-        c=cstate['red']
-    else:
-        c=cstate['other']
-    return c
-
-def applyCloudColourState(b):
-    if b>2499:
-        c=cstate['blue']
-    elif b>1499:
-        c=cstate['white']
-    elif b>699:
-        c=cstate['green']
-    elif b>299:
-        c=cstate['yellow']
-    elif b>199:
-        c=cstate['amber']
-    elif b>=0:
-        c=cstate['red']
-    else:
-        c=cstate['other']
-    return c
