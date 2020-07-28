@@ -293,7 +293,8 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
     
     xdr = DataRange1d(start=data[x_name][0],end=data[x_name][-1])
     #ydr = DataRange1d(start=0,end=15000)
-    ydr = DataRange1d(start=mapHeight(0, icao),end=mapHeight(15000, icao))
+    tick_vals, tick_label_overrides = getHeightmapTicks(icao)
+    ydr = DataRange1d(start=mapHeight(0, icao),end=mapHeight(int(tick_label_overrides[max(tick_vals)]), icao))
 
     sv_plotcolour_vis = 'white'
 
@@ -311,7 +312,7 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
     for b in data['Cloud Base']:
         colourstates.append(applyCloudColourState(b))
     data['colourstates']=colourstates
-    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=15)
+    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=16)
     
     plot.add_tools(HoverTool(
         renderers=[cloud_plot],
@@ -324,7 +325,6 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
     plot.yaxis.axis_label = 'Height (FT)'
     plot.add_layout(LinearAxis(axis_label='Height (FT)'), 'right')
 
-    tick_vals, tick_label_overrides = getHeightmapTicks(icao)
     plot.yaxis.ticker = tick_vals
     plot.yaxis.major_label_overrides = tick_label_overrides
 

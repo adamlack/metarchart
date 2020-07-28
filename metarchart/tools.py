@@ -56,6 +56,9 @@ def heightMap(icao=None):
         maps['egvp'] = [[153,95,119,189,160,140,999],[500,1000,2000,5000,10000,18000,999999],18000]
         maps['egwu'] = [[173,101,128,84,111,162,97,999],[500,1000,2000,3000,5000,10000,15000,999999],15000]
 
+        if icao.lower() not in maps:
+            icao = 'egvo_gliding'
+
         return maps[icao.lower()][0], maps[icao.lower()][1], maps[icao.lower()][2]
     else:
         return None
@@ -65,7 +68,7 @@ def getHeightmapTicks(icao):
     if icao != None:
         scale_heights, actual_heights, top = heightMap(icao)
         ticks, labels, x = [], {}, 0
-        for i in range(len(scale_heights)-2):
+        for i in range(len(scale_heights)-1):
             x = x+scale_heights[i]
             ticks.append(x)
             labels[x] = str(actual_heights[i])
