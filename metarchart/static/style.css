@@ -1,4 +1,4 @@
-html, body {font-family:sans-serif; background:#222; color:#aaa; padding:0; margin:0;}
+html, body {font-family:sans-serif; font-size:16px; background:#222; color:#aaa; padding:0; margin:0;}
 a {color:rgb(122, 163, 136); text-decoration: none;}
 a:hover {color:white;}
 .content p a:hover {border-bottom:1px solid white;}
@@ -12,8 +12,13 @@ nav ul li a:hover {background:rgb(255, 255, 255, 0.05);}
 nav ul .active {font-weight:bold; color:white;}
 nav ul li svg {fill:#777; height:1.2rem; width:1.2rem;}
 nav ul li svg:hover {fill:white;}
-#settings-cog-href {padding:0; position:relative; top:0.2rem;}
-.settings-cog-active {fill:#aaa;}
+#nav-hor {display:inline-block}
+#nav-menu {display:none; z-index:9999; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}
+#nav-menu ul {padding:6rem 2rem 2rem;}
+#nav-menu ul li {display:block; width:100%; font-size:2em;}
+#menu-bars-li {display:none; z-index:99999; position:relative;}
+#settings-cog-href, #menu-bars-href {padding:0; position:relative; top:0.2rem;}
+.settings-cog-active, .menu-bars-active {fill:#aaa;}
 #settings {background:rgba(0,0,0,0.2); margin-bottom:0.8rem;}
 #settings dt, #settings dd, .setting, .settings-error {display:inline-block; margin:0;}
 .settings-error {padding:0.75rem 0.25rem; background:rgb(218, 54, 81); color:rgb(41, 12, 17); border-left:6px solid rgb(139, 23, 42);}
@@ -31,3 +36,23 @@ input:focus, select:focus {color:white; background: rgb(122, 163, 136);}
 .close-flash {display:block; padding:0.2rem; float:right; color:rgb(34, 19, 6);}
 .close-flash:hover {background: rgb(34, 19, 6); color: rgb(228, 184, 102);}
 .bk-tooltip {background:rgba(0,0,0,0.8) !important; border:none !important; color:#ddd !important;}
+.a-bokeh-plot {width:100%; height:14rem;}
+.doubleheight {height:22rem;}
+.singlevar {height:24rem;}
+
+@media screen and (max-aspect-ratio: 11/9) {
+    body {font-size:32px;}
+    nav ul  {padding:0.8rem 1rem; font-size:3.5rem;}
+    nav ul li svg {height:3.5rem; width:3.5rem;}
+    #nav-hor {display:none}
+    #menu-bars-li {display:block; float:right;}
+    .setting, input, select {font-size:2.6rem; margin-top:1rem;}
+    #icao {width:6rem;}
+    #time_window {width:4rem;}
+    #variable option {font-size:1rem;}
+    .flash-message {display:inline-block; max-width:75%;}
+    .flash, .close-flash {font-size:2rem;}
+    .a-bokeh-plot {width:100%; height:18rem;}
+    .doubleheight {height:26rem}
+    .singlevar {height:35rem;}
+}

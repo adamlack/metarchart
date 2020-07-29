@@ -22,6 +22,7 @@ def setLook(plot):
     date_tick_format = " %d/%H%MZ"
     plot.xaxis.formatter = DatetimeTickFormatter(
         minutes=[date_tick_format],
+        hourmin=[date_tick_format],
         hours=[date_tick_format],
         days=[date_tick_format],
     )
@@ -98,7 +99,7 @@ def timeLineChart(data, y_name, details='', width=set_w, height=set_h):
         x_axis_type='datetime',
         x_range =xdr,
         toolbar_location=None,
-        sizing_mode='scale_width'
+        sizing_mode='stretch_both'
     )
     sv_plotcolour = '#eaea86'
 
@@ -144,7 +145,7 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
         x_range=xdr,
         y_range=ydr,
         toolbar_location=None,
-        sizing_mode='scale_width'
+        sizing_mode='stretch_both'
     )
     makeCirclePlot(plot, data, 'Wind Speed', sv_plotcolour_spd)
     speed_plot = makeLinePlot(plot, data, 'Wind Speed', sv_plotcolour_spd)
@@ -209,7 +210,7 @@ def timeLineChartTempDewpt(data, details='', width=set_w, height=set_h):
         x_range=xdr,
         y_range=ydr,
         toolbar_location=None,
-        sizing_mode='scale_width'
+        sizing_mode='stretch_both'
     )
     makeCirclePlot(plot, data, 'Temperature', sv_plotcolour_temp)
     temp_plot = makeLinePlot(plot, data, 'Temperature', sv_plotcolour_temp)
@@ -258,7 +259,7 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
         x_range=xdr,
         y_range=ydr,
         toolbar_location=None,
-        sizing_mode='scale_width'
+        sizing_mode='stretch_both'
     )
     colourstates = []
     for v in data['Visibility']:
@@ -306,13 +307,13 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
         x_range=xdr,
         y_range=ydr,
         toolbar_location=None,
-        sizing_mode='scale_width'
+        sizing_mode='stretch_both'
     )
     colourstates = []
     for b in data['Cloud Base']:
         colourstates.append(applyCloudColourState(b))
     data['colourstates']=colourstates
-    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=16)
+    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=15)
     
     plot.add_tools(HoverTool(
         renderers=[cloud_plot],

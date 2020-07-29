@@ -25,7 +25,7 @@
 
 {% block content %}
     <h1>{% block title %}{{ pagetitle }}{% endblock %}</h1>
-    <div style="background:#222222;">{{ the_div|safe }}</div>
+    <div class="a-bokeh-plot singlevar" style="background:#222222;">{{ the_div|safe }}</div>
     <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>
     {{ the_script|safe }}
 {% endblock %}
