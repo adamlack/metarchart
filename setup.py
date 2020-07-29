@@ -14,9 +14,5 @@ setup(
         'metar',
         'flask_wtf',
         'wtforms',
-        '',
-        '',
-        '',
-        '',
     ],
 )
