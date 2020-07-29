@@ -6,7 +6,9 @@
 
 {% block content %}
     <h1>{% block title %}About{% endblock %}</h1>
-    <p>This tool allows you to visualise the meteorological variables reported in METAR reports.</p>
+    <p>This tool allows you to visualise the meteorological variables reported in Meteorological Aerodrome Reports (METARs).</p>
+    <p>At the moment up to the last 5 days of METAR reports (minumum 6 hours) can be retrieved.</p>
+    <hr>
     <p>It runs on <a href="https://www.python.org/" target="_blank">Python</a> using <a href="https://palletsprojects.com/p/flask/" target="_blank">Flask</a>, <a href="https://bokeh.org/" target="_blank">Bokeh</a> and <a href="https://github.com/python-metar" target="_blank">python-metar</a>.</p>
     <p>METAR data is currently scraped from <a href="https://www.ogimet.com/home.phtml.en" target="_blank">Ogimet</a>.</p>
     <hr>
