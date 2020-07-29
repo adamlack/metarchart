@@ -265,7 +265,7 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
     for v in data['Visibility']:
         colourstates.append(applyVisColourState(v))
     data['colourstates']=colourstates
-    makeCirclePlot(plot, data, 'Visibility', 'colourstates', size=12)
+    makeCirclePlot(plot, data, 'Visibility', 'colourstates', size=18)
     vis_plot = makeLinePlot(plot, data, 'Visibility', sv_plotcolour_vis, line_alpha=0.2)
     plot.add_tools(HoverTool(
         renderers=[vis_plot],
