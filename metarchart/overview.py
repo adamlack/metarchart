@@ -22,7 +22,9 @@ def index():
         
         if error is None:
             metar_data = latestMetars(icao, time_window)
-            if len(metar_data) > 0:
+            if metar_data == 'ogi_limited':
+                error = 'Data retrieval limited by ogimet. Please try again later.'
+            elif len(metar_data) > 0:
                 scripts, divs = {}, {}
 
                 from .tools import mapHeight

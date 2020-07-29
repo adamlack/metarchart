@@ -30,14 +30,21 @@ def latestMetars(icao, time_window=None):
     if response is not None:
         page = response.text.replace('\n','')
         page = ' '.join(page.split())
-        rex = '(METAR .*?=)'
-        metars = re.findall(rex, str(page))
-        metars = cleanOgi(metars)
-        metar_objects = []
-        for m in metars:
-            metar_objects.append(Metar.Metar(m, strict=False))
-        metar_objects.reverse()
-    return metar_objects
+        rex_limited = 'A string indicating ogimet has limited the response'
+        limited = re.findall(rex_limited, str(page))
+        #print(limited)
+        if limited:
+            return 'ogi_limited'
+        else:
+            rex = '(METAR .*?=)'
+            metars = re.findall(rex, str(page))
+            metars = cleanOgi(metars)
+            metar_objects = []
+            for m in metars:
+                metar_objects.append(Metar.Metar(m, strict=False))
+            metar_objects.reverse()
+            return metar_objects
+    return None
 
 def extract(object_list, v=None):
     """Converts a list of python-metar objects into a list of the given variable.
@@ -65,6 +72,9 @@ def extract(object_list, v=None):
                     for layer in o.sky:
                         if layer[1]:
                             variable_list.append(layer[1].value('FT'))
+                            times_list.append(o.time)
+                        else:
+                            variable_list.append(float('nan'))
                             times_list.append(o.time)
                 else:
                     variable_list.append(float('nan'))

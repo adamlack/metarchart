@@ -23,38 +23,41 @@ def index():
         
         if error is None:
             metar_data = latestMetars(icao, time_window)
-            name, units, values, times = extract(metar_data, vname)
-            data={}
-            data['Time'] = times
-            details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
-        
-            if name == 'Cloud Base':
-                data[name] = values 
-                from .tools import mapHeight
-                data['Cloud Base Adjusted'] = [mapHeight(h, icao) for h in data['Cloud Base']]
-                if data[name]:
-                    script, div = make_plot.timeChartCloud(data, details)
-                else:
-                    error = 'No data retrieved. Please check request details.'
-            elif name == 'Visibility':
-                data[name] = values
-                if data[name]:
-                    script, div = make_plot.timeLineChartVisibility(data, details)
-                else:
-                    error = 'No data retrieved. Please check request details.'
-            elif name == 'Wind':
-                if values['speed']:
-                    data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
-                    script, div = make_plot.timeLineChartWind(data, details)
-                else:
-                    error = 'No data retrieved. Please check request details.'
+            if metar_data == 'ogi_limited':
+                error = 'Data retrieval limited by ogimet. Please try again later.'
             else:
-                data[name] = values
-                
-                if data[name]:
-                    script, div = make_plot.timeLineChart(data, name, details)
+                name, units, values, times = extract(metar_data, vname)
+                data={}
+                data['Time'] = times
+                details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
+            
+                if name == 'Cloud Base':
+                    data[name] = values 
+                    from .tools import mapHeight
+                    data['Cloud Base Adjusted'] = [mapHeight(h, icao) for h in data['Cloud Base']]
+                    if data[name]:
+                        script, div = make_plot.timeChartCloud(data, details)
+                    else:
+                        error = 'No data retrieved. Please check request details.'
+                elif name == 'Visibility':
+                    data[name] = values
+                    if data[name]:
+                        script, div = make_plot.timeLineChartVisibility(data, details)
+                    else:
+                        error = 'No data retrieved. Please check request details.'
+                elif name == 'Wind':
+                    if values['speed']:
+                        data['Wind Speed'], data['Wind Gust'], data['Wind Direction'] = values['speed'], values['gust'], values['direction']
+                        script, div = make_plot.timeLineChartWind(data, details)
+                    else:
+                        error = 'No data retrieved. Please check request details.'
                 else:
-                    error = 'No data retrieved. Please check request details.'
+                    data[name] = values
+                    
+                    if data[name]:
+                        script, div = make_plot.timeLineChart(data, name, details)
+                    else:
+                        error = 'No data retrieved. Please check request details.'
 
     if error != None or request.method != 'POST':
         script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
