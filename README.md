@@ -24,7 +24,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 
 ## Features
 ### Station overview
-<img src="docs/images/overview_example_egaa_48hours.png" alt="Screenshot of overview plots" width="300"/><img src="docs/images/overview_example_egyp_72hours.png" alt="Screenshot of overview plots" width="300"/><img src="docs/overview_example_egcc_120hours/overview_example_egaa_48hours.png" alt="Screenshot of overview plots" width="300"/>
+<img src="docs/images/overview_example_egaa_48hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egyp_72hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egcc_120hours.png" alt="Screenshot of overview plots" height="400"/>
 **Station overview** shows a set of plots covering all the core meteorological variables reported in a METAR, for a single specified station. The variables shown are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
@@ -33,7 +33,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 - QNH pressure
 
 ### Single variable
-![Screenshot of single variable plot](docs/images/singlevariable_example_lfll_vis.png)
+<img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="300"/>
 **Single variable plots** allow you to view a single plot of a chosen variable for a specified station. The variables available are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
@@ -46,42 +46,42 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 - Wind gust (if reported)
   
 ### Responsive design
-![Screenshot of app on a mobile device](docs/images/mobile_example_eggd_12hours.png) ![Screenshot of app on a mobile device](docs/images/mobile_example_navigation)
+<img src="docs/images/mobile_example_eggd_12hours.png" alt="Screenshot of app on a mobile device" height="300"/> <img src="docs/images/mobile_example_navigation.png" alt="Screenshot of app on a mobile device" height="300"/>
 **Responsive design** means that the web app is optimised for use on mobile devices.
 
 ## Usage
 ### Station overview
 Enter an [ICAO airport code](https://en.wikipedia.org/wiki/ICAO_airport_code) in the _ICAO_ box. Enter your desired time window in hours (Default is 24 hours; ie covering the last 24 hours from the current time). Press "Go" to view the plots.
-![Screenshot of overview settings area](docs/images/overview_settings.png)
+<img src="docs/images/overview_settings.png" alt="Screenshot of overview settings area" width="300"/>
 
 ### Single variable
 Enter an [ICAO airport code](https://en.wikipedia.org/wiki/ICAO_airport_code) in the _ICAO_ box. Enter your desired time window in hours (Default is 24 hours; ie covering the last 24 hours from the current time). Select the variable you wish to view from the dropdown menu. Press "Go" to view the plots.
-![Screenshot of single variable settings area](docs/images/singlevariable_settings.png)
+<img src="docs/images/singlevariable_settings.png" alt="Screenshot of single variable settings area" width="300"/>
 
 ### Hiding the settings area
 It is possible to toggle the settings area on and off by pressing the cog/wheel icon to the right of _metarchart_ at the top left of the screen.
-![Screenshot of cog icon and navigation bar](docs/images/settings_cog.png)
+<img src="docs/images/settings_cog.png" alt="Screenshot of cog icon and navigation bar"/>
 
 ## Interpreting the plots
 #### Cloud base
 Each reported cloud base is shown as a coloured dot. They are colour-coded according to UK Military colour states. Hovering over or tapping each point will show the reported cloud base and time of observation.
-![Cloud base plot example](docs/images/cloud_base_tooltip.png]
+<img src="docs/images/cloud_base_tooltip.png" alt="Cloud base plot example"/>
 
 #### Visibility/weather
 Each reported visibility is shown as a coloured dot. They are colour-coded according to UK Military colour states. Hovering over or tapping each point will show the reported visibility, time of observation and any significant weather reported at that time.
-![Cloud base plot example](docs/images/visibility_weather_tooltip.png]
+<img src="docs/images/visibility_weather_tooltip.png" alt="Visibility/weather plot example"/>
 
 #### Wind (combined)
 Wind direction is plotted in purple against the scale on the right. Wind speed is plotted in green against the scale on the left. If any wind gusts are reported in the METARs, they will be shown as larger green dots "floating" above the main wind speed. Hovering over or tapping each point will show the reported wind direction and speed and time of observation. Any gusts at that time will also be shown.
-![Cloud base plot example](docs/images/wind_gust_tooltip.png]
+<img src="docs/images/wind_gust_tooltip.png" alt="Wind (combined) plot example"/>
 
 #### Temperature/dew point
 Temperature is plotted in red, and dew point in a fainter red. Hovering over or tapping each point will show the reported temperature, dewpoint and time of observation.
-![Cloud base plot example](docs/images/temperature_dewpoint_tooltip.png]
+<img src="docs/images/temperature_dewpoint_tooltip.png" alt="Temperature/dew point plot example"/>
 
 #### QNH pressure or other single variable
 QNH pressure, or any other standard single variable plot will show that variable in yellow. Hovering over or tapping each point will show the reported value of the variable and time of observation.
-![Cloud base plot example](docs/images/qnh_tooltip.png]
+<img src="docs/images/qnh_tooltip.png" alt="QNH pressure plot example"/>
 
 ## Structure
 [Flask](https://github.com/pallets/flask), [WTForms](https://github.com/wtforms/wtforms) and [Bokeh](https://github.com/bokeh/bokeh) are used for the front end, while [python-metar](https://github.com/python-metar/python-metar), [requests](https://github.com/psf/requests) and [numpy](https://github.com/numpy/numpy) are used to acquire and process the data.
