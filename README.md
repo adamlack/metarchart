@@ -24,7 +24,8 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 
 ## Features
 ### Station overview
-<img src="docs/images/overview_example_egaa_48hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egyp_72hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egcc_120hours.png" alt="Screenshot of overview plots" height="400"/>
+<img src="docs/images/overview_example_egaa_48hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egyp_72hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egcc_120hours.png" alt="Screenshot of overview plots" height="400"/>  
+
 Station overview shows a set of plots covering all the core meteorological variables reported in a METAR, for a single specified station. The variables shown are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
@@ -34,6 +35,7 @@ Station overview shows a set of plots covering all the core meteorological varia
 
 ### Single variable
 <img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="550"/>  
+
 Single variable plots allow you to view a single plot of a chosen variable for a specified station. The variables available are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
