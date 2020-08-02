@@ -49,7 +49,7 @@ def latestMetars(icao, time_window=None):
 def extract(object_list, v=None):
     """Converts a list of python-metar objects into a list of the given variable.
     
-    Accepted variables: cloudbase, wspeed, wgust, wdir, temp, dewpt, qnh, vis.
+    Accepted variables: cloudbase, wspeed, wgust, wdir, temp, dewpt, qnh, wx, vis.
 
     Can also use wind, which returns a dict of speed, gust and direction.
     
@@ -126,6 +126,15 @@ def extract(object_list, v=None):
                     else:
                         x = float('nan')
                     name, units = 'Visibility', 'M'
+                elif v == 'wx':
+                    if o.weather:
+                        x = ''
+                        for i in range(5):
+                            if o.weather[0][i]:
+                                x = x+str(o.weather[0][i])
+                    else:
+                        x = float('nan')
+                    name, units = 'Weather', ''
                 else:
                     raise Exception('Valid variable not given. ("{}" was given)'.format(v))
                 variable_list.append(x)
