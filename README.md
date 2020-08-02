@@ -1,5 +1,5 @@
 # metarchart
-A Flask web app for plotting METAR data using Bokeh.
+A web app for plotting METAR data.
 
 This tool allows you to visualise the meteorological variables reported in Meteorological Aerodrome Reports (METARs).
 
