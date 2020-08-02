@@ -33,7 +33,7 @@ Station overview shows a set of plots covering all the core meteorological varia
 - QNH pressure
 
 ### Single variable
-<img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="400"/>  
+<img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="550"/>  
 Single variable plots allow you to view a single plot of a chosen variable for a specified station. The variables available are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
@@ -52,11 +52,11 @@ Responsive design means that the web app is optimised for use on mobile devices.
 ## Usage
 ### Station overview
 Enter an [ICAO airport code](https://en.wikipedia.org/wiki/ICAO_airport_code) in the _ICAO_ box. Enter your desired time window in hours (Default is 24 hours; ie covering the last 24 hours from the current time). Press "Go" to view the plots.  
-<img src="docs/images/overview_settings.png" alt="Screenshot of overview settings area" width="300"/>
+<img src="docs/images/overview_settings.png" alt="Screenshot of overview settings area" width="400"/>
 
 ### Single variable
 Enter an [ICAO airport code](https://en.wikipedia.org/wiki/ICAO_airport_code) in the _ICAO_ box. Enter your desired time window in hours (Default is 24 hours; ie covering the last 24 hours from the current time). Select the variable you wish to view from the dropdown menu. Press "Go" to view the plots.  
-<img src="docs/images/singlevariable_settings.png" alt="Screenshot of single variable settings area" width="300"/>
+<img src="docs/images/singlevariable_settings.png" alt="Screenshot of single variable settings area" width="400"/>
 
 ### Hiding the settings area
 It is possible to toggle the settings area on and off by pressing the cog/wheel icon to the right of _metarchart_ at the top left of the screen.  
