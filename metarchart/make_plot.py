@@ -138,7 +138,7 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
     sv_plotcolour_dir = '#9f54bb'
 
     plot = figure(
-        title = 'Wind'+location,
+        title = 'Wind'+location+' (Gusts shown only if reportable)',
         plot_width=width,
         plot_height=height,
         x_axis_type='datetime',

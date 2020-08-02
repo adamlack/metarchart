@@ -63,7 +63,7 @@ def index():
         script, div, details = '', '', {'icao':'???', 'name':'???', 'units':'???', 'time_window':'???'}
         pagetitle = 'Choose station ICAO, time window and variable.'
     else:
-        pagetitle = details['name']+' at '+details['icao']+' over the last '+str(details['time_window'])+' hours'
+        pagetitle = details['name']+' at '+details['icao']+' (last '+str(details['time_window'])+' hours)'
     if error != None:
         flash(error)
 
