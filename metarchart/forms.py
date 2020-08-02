@@ -18,10 +18,10 @@ class VariableSettingsForm(FlaskForm):
         ('wspeed','Wind speed'),
         ('wgust','Wind gust (reported)'),
         ('wdir','Wind direction'),
+        ('vis','Visibility'),
         ('temp','Temperature'),
         ('dewpt','Dew point'),
-        ('qnh','QNH Pressure'),
-        ('vis','Visibility')
+        ('qnh','QNH Pressure')
     ])
     submit = SubmitField('Go')
 
