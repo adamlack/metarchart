@@ -41,6 +41,7 @@ def index():
                         error = 'No data retrieved. Please check request details.'
                 elif name == 'Visibility':
                     data[name] = values
+                    d1, d2, data['Weather'], d3 = extract(metar_data, 'wx') # d1-3 dummy values
                     if data[name]:
                         script, div = make_plot.timeLineChartVisibility(data, details)
                     else:

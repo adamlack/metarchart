@@ -45,6 +45,7 @@ def index():
 
                 data = {}
                 name, units, data['Visibility'], data['Time'] = extract(metar_data, 'vis')
+                d1, d2, data['Weather'], d3 = extract(metar_data, 'wx') # d1-3 dummy values
                 scripts['visibility'], divs['visibility'] = make_plot.timeLineChartVisibility(data, {'icao':icao, 'name':'Visibility', 'units':units, 'time_window':time_window})
 
                 for x in ['qnh']:
