@@ -100,13 +100,22 @@ def extract(object_list, v=None):
                         x = float('nan')
                     name, units = 'Wind Direction', ''
                 elif v == 'temp':
-                    x = o.temp.value('C')
+                    if o.temp:
+                        x = o.temp.value('C')
+                    else:
+                        x = float('nan')
                     name, units = 'Temperature', 'C'
                 elif v == 'dewpt':
-                    x = o.dewpt.value('C')
+                    if o.dewpt:
+                        x = o.dewpt.value('C')
+                    else:
+                        x = float('nan')
                     name, units = 'Dew Point', 'C'
                 elif v == 'qnh':
-                    x = o.press.value('MB')
+                    if o.press:
+                        x = o.press.value('MB')
+                    else:
+                        x = float('nan')
                     name, units = 'QNH Pressure', 'hPa'
                 elif v == 'vis':
                     if o.vis:
