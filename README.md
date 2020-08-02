@@ -25,7 +25,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 ## Features
 ### Station overview
 <img src="docs/images/overview_example_egaa_48hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egyp_72hours.png" alt="Screenshot of overview plots" height="400"/> <img src="docs/images/overview_example_egcc_120hours.png" alt="Screenshot of overview plots" height="400"/>
-**Station overview** shows a set of plots covering all the core meteorological variables reported in a METAR, for a single specified station. The variables shown are:
+Station overview shows a set of plots covering all the core meteorological variables reported in a METAR, for a single specified station. The variables shown are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
 - Temperature and dew point
@@ -34,7 +34,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 
 ### Single variable
 <img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="400"/>
-**Single variable plots** allow you to view a single plot of a chosen variable for a specified station. The variables available are:
+Single variable plots allow you to view a single plot of a chosen variable for a specified station. The variables available are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
 - Visibility and any significant weather reported
@@ -47,7 +47,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
   
 ### Responsive design
 <img src="docs/images/mobile_example_eggd_12hours.png" alt="Screenshot of app on a mobile device" height="400"/> <img src="docs/images/mobile_example_navigation.png" alt="Screenshot of app on a mobile device" height="400"/>
-**Responsive design** means that the web app is optimised for use on mobile devices.
+Responsive design means that the web app is optimised for use on mobile devices.
 
 ## Usage
 ### Station overview
