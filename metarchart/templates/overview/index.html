@@ -15,8 +15,8 @@
         {% endmacro %}
         <form method="post">
             {{ form.csrf_token }}
-            {{ render_field(form.icao) }}
-            {{ render_field(form.time_window) }}
+            {{ render_field(form.icao, onClick='this.setSelectionRange(0, this.value.length)') }}
+            {{ render_field(form.time_window, onClick='this.setSelectionRange(0, this.value.length)') }}
             {{ form.submit }}
         </form>
     </section>
