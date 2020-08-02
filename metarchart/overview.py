@@ -59,7 +59,7 @@ def index():
         pagetitle = 'Choose station ICAO and time window.'
     else:
         details = {'icao':icao, 'name':'overview', 'units':'', 'time_window':time_window}
-        pagetitle = 'Overview for '+details['icao']+' over the last '+str(details['time_window'])+' hours'
+        pagetitle = details['icao']+' overview for the last '+str(details['time_window'])+' hours'
     if error != None:
         flash(error)
 

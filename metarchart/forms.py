@@ -8,7 +8,7 @@ class VariableSettingsForm(FlaskForm):
         DataRequired(),
         Regexp(r'([a-zA-Z]{4})$', message='Not a valid ICAO')
     ])
-    time_window = IntegerField('Time window (hours)', default=12, validators=[
+    time_window = IntegerField('Time window (hours)', default=24, validators=[
         DataRequired(),
         NumberRange(min=6, max=120, message='Must be between %(min)s and %(max)s hours')
     ])
@@ -23,7 +23,7 @@ class VariableSettingsForm(FlaskForm):
         ('qnh','QNH Pressure'),
         ('vis','Visibility')
     ])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Go')
 
 class OverviewSettingsForm(FlaskForm):
     """Station overview settings form"""
@@ -31,8 +31,8 @@ class OverviewSettingsForm(FlaskForm):
         DataRequired(),
         Regexp(r'([a-zA-Z]{4})$', message='Not a valid ICAO')
     ])
-    time_window = IntegerField('Time window (hours)', default=12, validators=[
+    time_window = IntegerField('Time window (hours)', default=24, validators=[
         DataRequired(),
         NumberRange(min=6, max=120, message='Must be between %(min)s and %(max)s hours')
     ])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Go')
