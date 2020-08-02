@@ -1,6 +1,10 @@
 <!doctype html>
+<html>
+<head>
 <title>metarchart: {% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body onload="focusOnICAOInput()">
 <section id="messages">
     {% for message in get_flashed_messages() %}
     <div class="flash"><span class="flash-message"><span style="color:red;">!</span> {{ message }}</span><a href="#" onclick="this.parentNode.style.display='none';" class="close-flash">Dismiss X</a></div>
@@ -68,6 +72,16 @@
         }
   }
 </script>
+<script>
+    function focusOnICAOInput() {
+        var plots = document.getElementsByClassName("bk-root");
+        if (plots.length === 0) {
+            document.getElementById("icao").focus();
+        }
+    }
+</script>
 <section class="content">
     {% block content %}{% endblock %}
 </section>
+</body>
+</html>
