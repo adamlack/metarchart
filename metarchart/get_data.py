@@ -133,7 +133,7 @@ def extract(object_list, v=None):
                             if o.weather[0][i]:
                                 x = x+str(o.weather[0][i])
                     else:
-                        x = float('nan')
+                        x = 'Nil'
                     name, units = 'Weather', ''
                 else:
                     raise Exception('Valid variable not given. ("{}" was given)'.format(v))

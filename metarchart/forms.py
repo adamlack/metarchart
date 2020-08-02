@@ -15,7 +15,7 @@ class VariableSettingsForm(FlaskForm):
     variable = SelectField('Variable', validators=[DataRequired()], choices=[
         ('cloudbase','Cloud base'),
         ('wind','Wind (combined)'),
-        ('vis','Visibility'),
+        ('vis','Visibility/Weather'),
         ('temp','Temperature'),
         ('dewpt','Dew point'),
         ('qnh','QNH Pressure'),

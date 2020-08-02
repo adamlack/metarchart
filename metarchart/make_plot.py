@@ -252,7 +252,7 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
     sv_plotcolour_vis = 'white'
 
     plot = figure(
-        title = 'Visibility'+location,
+        title = 'Visibility/Weather'+location,
         plot_width=width,
         plot_height=height,
         x_axis_type='datetime',
@@ -269,7 +269,7 @@ def timeLineChartVisibility(data, details='', width=set_w, height=set_h):
     vis_plot = makeLinePlot(plot, data, 'Visibility', sv_plotcolour_vis, line_alpha=0.2)
     plot.add_tools(HoverTool(
         renderers=[vis_plot],
-        tooltips='@{Visibility}M at @Time{%H%MZ}',
+        tooltips='@{Visibility}M at @Time{%H%MZ}<br>Weather: @{Weather}',
         mode='vline', # use 'mouse' for only over points
         formatters={'@Time': 'datetime'},
         show_arrow=False,
