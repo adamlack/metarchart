@@ -33,7 +33,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 - QNH pressure
 
 ### Single variable
-<img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="300"/>
+<img src="docs/images/singlevariable_example_lfll_vis.png" alt="Screenshot of single variable plot" width="400"/>
 **Single variable plots** allow you to view a single plot of a chosen variable for a specified station. The variables available are:
 - Cloud base
 - Wind direction and speed (Gusts are included if reported)
@@ -46,7 +46,7 @@ _metarchart_ is designed to allow you to visualise the meteorological variables 
 - Wind gust (if reported)
   
 ### Responsive design
-<img src="docs/images/mobile_example_eggd_12hours.png" alt="Screenshot of app on a mobile device" height="300"/> <img src="docs/images/mobile_example_navigation.png" alt="Screenshot of app on a mobile device" height="300"/>
+<img src="docs/images/mobile_example_eggd_12hours.png" alt="Screenshot of app on a mobile device" height="400"/> <img src="docs/images/mobile_example_navigation.png" alt="Screenshot of app on a mobile device" height="400"/>
 **Responsive design** means that the web app is optimised for use on mobile devices.
 
 ## Usage
