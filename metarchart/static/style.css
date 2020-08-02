@@ -27,7 +27,7 @@ nav ul li svg:hover {fill:white;}
 #time_window {width: 2rem;}
 #submit {padding:0.75rem 2rem; color:#aaa; border:none;}
 #submit:hover {background:rgb(122, 163, 136); color:black; cursor:pointer;}
-input[type="submit"] {border-radius:0; appearance:none; -webkit-appearance:none; -moz-appearance:none;}
+input[type="submit"] {appearance:none; -webkit-appearance:none; -moz-appearance:none;}
 input, select {background:rgba(255,255,255,0.2); border:none; padding:0.75rem 0.25rem; font-size:1rem;}
 input:hover, select:hover {background:rgba(255,255,255,0.3);}
 input:focus, select:focus {color:white; background: rgb(122, 163, 136);}
