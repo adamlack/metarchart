@@ -49,6 +49,7 @@ Single variable plots allow you to view a single plot of a chosen variable for a
   
 ### Responsive design
 <img src="docs/images/mobile_example_eggd_12hours.png" alt="Screenshot of app on a mobile device" height="400"/> <img src="docs/images/mobile_example_navigation.png" alt="Screenshot of app on a mobile device" height="400"/>  
+
 Responsive design means that the web app is optimised for use on mobile devices.
 
 ## Usage
@@ -67,22 +68,27 @@ It is possible to toggle the settings area on and off by pressing the cog/wheel 
 ## Interpreting the plots
 #### Cloud base
 Each reported cloud base is shown as a coloured dot. They are colour-coded according to UK Military colour states. Hovering over or tapping each point will show the reported cloud base and time of observation.  
+
 <img src="docs/images/cloud_base_tooltip.png" alt="Cloud base plot example"/>
 
 #### Visibility/weather
 Each reported visibility is shown as a coloured dot. They are colour-coded according to UK Military colour states. Hovering over or tapping each point will show the reported visibility, time of observation and any significant weather reported at that time.  
+
 <img src="docs/images/visibility_weather_tooltip.png" alt="Visibility/weather plot example"/>
 
 #### Wind (combined)
 Wind direction is plotted in purple against the scale on the right. Wind speed is plotted in green against the scale on the left. If any wind gusts are reported in the METARs, they will be shown as larger green dots "floating" above the main wind speed. Hovering over or tapping each point will show the reported wind direction and speed and time of observation. Any gusts at that time will also be shown.  
+
 <img src="docs/images/wind_gust_tooltip.png" alt="Wind (combined) plot example"/>
 
 #### Temperature/dew point
-Temperature is plotted in red, and dew point in a fainter red. Hovering over or tapping each point will show the reported temperature, dewpoint and time of observation.  
+Temperature is plotted in red, and dew point in a fainter red. Hovering over or tapping each point will show the reported temperature, dewpoint and time of observation. 
+
 <img src="docs/images/temperature_dewpoint_tooltip.png" alt="Temperature/dew point plot example"/>
 
 #### QNH pressure or other single variable
 QNH pressure, or any other standard single variable plot will show that variable in yellow. Hovering over or tapping each point will show the reported value of the variable and time of observation.  
+
 <img src="docs/images/qnh_tooltip.png" alt="QNH pressure plot example"/>
 
 ## Structure
