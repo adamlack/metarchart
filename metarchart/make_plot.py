@@ -156,9 +156,10 @@ def timeLineChartWind(data, details='', width=set_w, height=set_h):
         formatters={'@Time': 'datetime'},
         show_arrow=False,
     ))
+    gust_plot_hidden = makeLinePlot(plot, data, 'Wind Gust', 'red', line_alpha=0)
     gust_plot = makeCirclePlot(plot, data, 'Wind Gust', sv_plotcolour_spd, size=12)
     plot.add_tools(HoverTool(
-        renderers=[gust_plot],
+        renderers=[gust_plot_hidden],
         tooltips='Reported gust of @{Wind Gust}KT at @Time{%H%MZ}',
         mode='vline', # use 'mouse' for only over points
         formatters={'@Time': 'datetime'},
