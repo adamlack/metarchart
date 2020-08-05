@@ -64,14 +64,14 @@ def makeLinePlot(plot, data, y_name, colour, line_alpha=0.8):
                 line_cap='round',
                 line_dash='solid',
             )
-def makeCirclePlot(plot, data, y_name, colour, size=8):
+def makeCirclePlot(plot, data, y_name, colour, size=8, alpha=0.5):
     return plot.circle(
                 x='Time',
                 y=y_name,
                 source=data,
                 size=size,
                 fill_color=colour,
-                fill_alpha=0.5,
+                fill_alpha=alpha,
                 hover_alpha=0.9,
                 line_alpha=0,
                 hover_line_alpha=0
@@ -310,15 +310,21 @@ def timeChartCloud(data, details='', width=set_w, height=set_h*2):
         toolbar_location=None,
         sizing_mode='stretch_both'
     )
-    colourstates = []
+    colourstates, alphas = [], []
     for b in data['Cloud Base']:
         colourstates.append(applyCloudColourState(b))
     data['colourstates']=colourstates
-    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=15)
+    for a in data['Cloud Amount']:
+        if a in ['SCT', 'BKN', 'OVC']:
+            alphas.append(0.6)
+        else:
+            alphas.append(0.2)
+    data['alphas']=alphas
+    cloud_plot = makeCirclePlot(plot, data, 'Cloud Base Adjusted', 'colourstates', size=15, alpha='alphas')
     
     plot.add_tools(HoverTool(
         renderers=[cloud_plot],
-        tooltips='@{Cloud Base}FT at @Time{%H%MZ}',
+        tooltips='@{Cloud Amount} at @{Cloud Base}FT at @Time{%H%MZ}',
         mode='mouse', # use 'mouse' for only over points
         formatters={'@Time': 'datetime'},
         show_arrow=False,

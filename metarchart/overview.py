@@ -29,7 +29,8 @@ def index():
 
                 from .tools import mapHeight
                 data = {}
-                name, units, data['Cloud Base'], data['Time'] = extract(metar_data, 'cloudbase')
+                name, units, values, data['Time'] = extract(metar_data, 'cloud')
+                data['Cloud Base'], data['Cloud Amount'] = values['cloudbase'], values['cloudamount']
                 data['Cloud Base Adjusted'] = [mapHeight(h, icao) for h in data['Cloud Base']]
                 scripts['cloudbase'], divs['cloudbase'] = make_plot.timeChartCloud(data, {'icao':icao, 'name':name, 'units':units, 'time_window':time_window})
 

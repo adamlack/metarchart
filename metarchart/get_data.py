@@ -49,9 +49,11 @@ def latestMetars(icao, time_window=None):
 def extract(object_list, v=None):
     """Converts a list of python-metar objects into a list of the given variable.
     
-    Accepted variables: cloudbase, wspeed, wgust, wdir, temp, dewpt, qnh, wx, vis.
+    Accepted variables: cloudbase, cloudamount, wspeed, wgust, wdir, temp, dewpt, qnh, wx, vis.
 
-    Can also use wind, which returns a dict of speed, gust and direction.
+    Can also use 'wind', which returns a dict of speed, gust and direction.
+
+    Can also use 'cloud' which returns a dict of base height and amount.
     
     Returns variable name (str), units (str), data (list) and observation times (list)."""
     variable_list, times_list = [], []
@@ -66,20 +68,26 @@ def extract(object_list, v=None):
         variable_list['direction'] = extract(object_list, v='wdir')[2]
         name, units = 'Wind', ''
     else:
+        if v == 'cloud':
+            variable_list = {'cloudbase':[],'cloudamount':[]}
         for o in object_list:
-            if v == 'cloudbase':
+            if v == 'cloud':
                 if o.sky: #cover, height, cloud
                     for layer in o.sky:
                         if layer[1]:
-                            variable_list.append(layer[1].value('FT'))
-                            times_list.append(o.time)
+                            variable_list['cloudbase'].append(layer[1].value('FT'))
                         else:
-                            variable_list.append(float('nan'))
-                            times_list.append(o.time)
+                            variable_list['cloudbase'].append(float('nan'))
+                        if layer[0]:
+                            variable_list['cloudamount'].append(str(layer[0]))
+                        else:
+                            variable_list['cloudamount'].append('')
+                        times_list.append(o.time)
                 else:
-                    variable_list.append(float('nan'))
+                    variable_list['cloudbase'].append(float('nan'))
+                    variable_list['cloudamount'].append('')
                     times_list.append(o.time)
-                name, units = 'Cloud Base', 'FT'
+                name, units = 'Cloud', ''
             else:
                 if v == 'wspeed':
                     if o.wind_speed:

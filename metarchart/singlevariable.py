@@ -31,11 +31,11 @@ def index():
                 data['Time'] = times
                 details = {'icao':icao, 'name':name, 'units':units, 'time_window':time_window}
             
-                if name == 'Cloud Base':
-                    data[name] = values 
+                if name == 'Cloud':
+                    data['Cloud Base'], data['Cloud Amount'] = values['cloudbase'], values['cloudamount']
                     from .tools import mapHeight
                     data['Cloud Base Adjusted'] = [mapHeight(h, icao) for h in data['Cloud Base']]
-                    if data[name]:
+                    if data['Cloud Base']:
                         script, div = make_plot.timeChartCloud(data, details)
                     else:
                         error = 'No data retrieved. Please check request details.'
