@@ -67,7 +67,7 @@ It is possible to toggle the settings area on and off by pressing the cog/wheel 
 
 ## Interpreting the plots
 #### Cloud base
-Each reported cloud base is shown as a coloured dot. They are colour-coded according to UK Military colour states. Hovering over or tapping each point will show the reported cloud base and time of observation.  
+Each reported cloud base is shown as a coloured dot. They are colour-coded according to UK Military colour states. Cloud amounts of FEW are shown with lower opacity. Hovering over or tapping each point will show the reported cloud base & amount and time of observation.  
 
 <img src="docs/images/cloud_base_tooltip.png" alt="Cloud base plot example"/>
 
