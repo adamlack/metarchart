@@ -10,7 +10,7 @@ class VariableSettingsForm(FlaskForm):
     ])
     time_window = IntegerField('Time window (hours)', default=24, validators=[
         DataRequired(),
-        NumberRange(min=6, max=120, message='Must be between %(min)s and %(max)s hours')
+        NumberRange(min=6, max=240, message='Must be between %(min)s and %(max)s hours')
     ])
     variable = SelectField('Variable', validators=[DataRequired()], choices=[
         ('cloud','Cloud base'),
@@ -33,6 +33,6 @@ class OverviewSettingsForm(FlaskForm):
     ])
     time_window = IntegerField('Time window (hours)', default=24, validators=[
         DataRequired(),
-        NumberRange(min=6, max=120, message='Must be between %(min)s and %(max)s hours')
+        NumberRange(min=6, max=240, message='Must be between %(min)s and %(max)s hours')
     ])
     submit = SubmitField('Go')
