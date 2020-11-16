@@ -36,8 +36,9 @@ def latestMetars(icao, time_window=None):
         if limited:
             return 'ogi_limited'
         else:
-            rex = '(METAR .*?=)'
+            rex = '( (METAR|SPECI) .*?=)'
             metars = re.findall(rex, str(page))
+            metars = [m[0] for m in metars]
             metars = cleanOgi(metars)
             metar_objects = []
             for m in metars:
